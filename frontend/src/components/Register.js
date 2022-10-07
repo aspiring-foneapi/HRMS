@@ -79,8 +79,8 @@ export const Register = () => {
         <button onClick={handleSubmit} className="btn btn-primary">
           Register
         </button>
-        <button onClick={() => navigate("/login")} className="btn btn-primary">
-          Log Out
+        <button onClick={() => navigate("/home")} className="btn btn-primary">
+          Cancel
         </button>
       </form>
     </div>

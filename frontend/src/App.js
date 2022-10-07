@@ -4,20 +4,25 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import data from "./ContextApi";
 import Home from "./components/Home";
+import { Register } from "./components/Register";
 
 function App() {
   const [userData, setUserData] = useState({});
-  console.log(userData);
   return (
     <div className="App">
       <data.Provider value={{ setUserData }}>
         <Router>
           <Routes>
             <Route
-              path="/"
+              path="/home"
               element={userData && userData._id ? <Home /> : <Login />}
             />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/register"
+              element={userData && userData._id ? <Register /> : <Login />}
+            />
+            <Route path="/" element={<Login />} />
+            {/* <Route path="/" element={<Home />} /> */}
           </Routes>
         </Router>
       </data.Provider>
