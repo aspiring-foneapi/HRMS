@@ -5,9 +5,11 @@ import { useState } from "react";
 import data from "./ContextApi";
 import Home from "./components/Home";
 import { Register } from "./components/Register";
+import EmployeeDetails from "./components/EmployeeDetails";
+import CreateUser from "./components/CreateUser";
 
 function App() {
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState();
   return (
     <div className="App">
       <data.Provider value={{ setUserData }}>
@@ -22,7 +24,6 @@ function App() {
               element={userData && userData._id ? <Register /> : <Login />}
             />
             <Route path="/" element={<Login />} />
-            {/* <Route path="/" element={<Home />} /> */}
           </Routes>
         </Router>
       </data.Provider>

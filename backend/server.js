@@ -68,7 +68,9 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  res.send(req.body);
+  EmployeeDetailsModel.find((err, val) => {
+    res.send({ data: val });
+  });
 });
 
 const PORT = 3001;

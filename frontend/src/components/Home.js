@@ -2,6 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.css";
+import EmployeeDetails from "./EmployeeDetails";
+import CreateUser from "./CreateUser";
 
 function Home() {
   const navigate = useNavigate();
@@ -14,11 +16,7 @@ function Home() {
             ASG Platform Talent Center
           </a>
           <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-            />
+            <input className="form-control me-2" placeholder="Search" />
             <button className="btn btn-outline-success me-2">Search</button>
             <button
               className="btn btn-outline-success me-2"
@@ -35,43 +33,44 @@ function Home() {
           </form>
         </div>
       </nav>
-      <nav id="sidebarMenu" class=" d-lg-block sidebar ">
-        <div class="position-sticky">
-          <div class="list-group list-group-flush mx-3 mt-4">
+      <nav id="sidebarMenu" className=" d-lg-block sidebar ">
+        <div className="position-sticky">
+          <div className="list-group list-group-flush mx-3 mt-4">
             <a
               href="#"
-              class="list-group-item list-group-item-action py-2 ripple"
+              className="list-group-item list-group-item-action py-2 ripple"
               aria-current="true"
             >
-              <i class="fas fa-tachometer-alt fa-fw me-3"></i>
+              <i className="fas fa-tachometer-alt fa-fw me-3"></i>
               <span>Main dashboard</span>
             </a>
 
             <a
               href="#"
-              class="list-group-item list-group-item-action py-2 ripple"
+              className="list-group-item list-group-item-action py-2 ripple"
             >
-              <i class="fas fa-lock fa-fw me-3"></i>
+              <i className="fas fa-lock fa-fw me-3"></i>
               <span>Password</span>
             </a>
             <a
               href="#"
-              class="list-group-item list-group-item-action py-2 ripple"
+              className="list-group-item list-group-item-action py-2 ripple"
             >
-              <i class="fas fa-chart-line fa-fw me-3"></i>
+              <i className="fas fa-chart-line fa-fw me-3"></i>
               <span>Analytics</span>
             </a>
 
             <a
               href="#"
-              class="list-group-item list-group-item-action py-2 ripple"
+              className="list-group-item list-group-item-action py-2 ripple"
             >
-              <i class="fas fa-chart-bar fa-fw me-3"></i>
+              <i className="fas fa-chart-bar fa-fw me-3"></i>
               <span>Orders</span>
             </a>
           </div>
         </div>
       </nav>
+      <EmployeeDetails />
     </div>
   );
 }
