@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -27,8 +27,10 @@ export const Register = () => {
       await axios
         .post("http://localhost:3001/register", value)
         .then((res) => alert(res.data.message));
+      navigate("/home");
     } else {
       alert("Fill up all the Required fields");
+      navigate("/register");
     }
   };
 
@@ -78,7 +80,7 @@ export const Register = () => {
         </div>
         <button onClick={handleSubmit} className="btn btn-primary">
           Register
-        </button>
+        </button>{" "}
         <button onClick={() => navigate("/home")} className="btn btn-primary">
           Cancel
         </button>
