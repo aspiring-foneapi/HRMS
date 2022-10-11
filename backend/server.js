@@ -32,6 +32,43 @@ const EmployeeDetailsModel = new mongoose.model(
   EmployeeDetailsSchema
 );
 
+const ApplicantDetailsSchema = new mongoose.Schema({
+  firstname: String,
+  lastname: String,
+  email: { type: String, required: true, unique: true },
+  stage: Number,
+});
+
+const ApplicantDetailsModel = new mongoose.model(
+  "ApplicantDetailsModel",
+  ApplicantDetailsSchema
+);
+
+app.post("/applicant-registration", (req, res) => {
+  console.log(req.body);
+  const { firstname, lastname, email, stage } = req.body;
+  ApplicantDetailsModel.findOne({ email: email }, (err, user) => {
+    if (user) {
+      res.send({ message: "This email id is already registered" });
+    } else {
+      const user = new ApplicantDetailsModel({
+        firstname,
+        lastname,
+        email,
+        stage,
+      });
+      user.save();
+      res.send({ message: "Applicant is Successfully Registered" });
+    }
+  });
+});
+
+app.get("/applicants", (req, res) => {
+  ApplicantDetailsModel.find((err, val) => {
+    res.send({ data: val });
+  });
+});
+
 app.post("/register", (req, res) => {
   console.log(req.body);
   const { firstname, lastname, email, password } = req.body;
