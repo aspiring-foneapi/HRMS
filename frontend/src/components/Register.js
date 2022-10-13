@@ -7,6 +7,7 @@ export const Register = () => {
     firstname: "",
     lastname: "",
     email: "",
+    role: "",
     password: "",
   });
 
@@ -65,6 +66,16 @@ export const Register = () => {
             className="form-control"
             placeholder="Email"
             name="email"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label>Role</label>
+          <input
+            type="role"
+            className="form-control"
+            placeholder="Role"
+            name="role"
             onChange={handleChange}
           />
         </div>
