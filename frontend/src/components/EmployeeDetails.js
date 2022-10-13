@@ -30,8 +30,8 @@ function EmployeeDetails(user) {
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>Role</th>
           <th>ID</th>
-          <th>Password</th>
         </thead>
         <tbody>
           {employees.map((employee) => (
@@ -47,8 +47,11 @@ function EmployeeDetails(user) {
               </td>
               <td>{employee.lastname}</td>
               <td>{employee.email}</td>
+              <td>{employee.role}</td>
               <td>{employee._id}</td>
-              <td>{employee.password}</td>
+              <td>
+                <button>Offboard</button>
+              </td>
             </tr>
           ))}
         </tbody>
