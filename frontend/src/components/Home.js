@@ -21,12 +21,9 @@ function Home() {
             >
               Search
             </button>
-            <button
-              className="btn btn-outline-success me-2"
-              onClick={() => navigate("/register")}
-            >
-              Register
-            </button>
+            <Link to={"/register"}>
+              <button className="btn btn-outline-success me-2">Register</button>
+            </Link>
             <button
               className="btn btn-outline-success me-2"
               onClick={() => navigate("/")}
@@ -40,7 +37,7 @@ function Home() {
         <div className="position-sticky">
           <div className="list-group list-group-flush mx-3 mt-4">
             <Link
-              to={() => navigate}
+              to={"/home"}
               className="list-group-item list-group-item-action py-2 ripple"
               aria-current="true"
             >
@@ -70,7 +67,7 @@ function Home() {
               <span>Onboarding</span>
             </Link>
             <Link
-              to={"/offboarding"}
+              to={"/offboarding-employees"}
               className="list-group-item list-group-item-action py-2 ripple"
             >
               <i className="fas fa-chart-line fa-fw me-3"></i>
