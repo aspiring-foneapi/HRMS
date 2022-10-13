@@ -62,7 +62,20 @@ function Home() {
               <i className="fas fa-chart-line fa-fw me-3"></i>
               <span>Applicants</span>
             </Link>
-
+            <Link
+              to={"/onboarding"}
+              className="list-group-item list-group-item-action py-2 ripple"
+            >
+              <i className="fas fa-chart-line fa-fw me-3"></i>
+              <span>Onboarding</span>
+            </Link>
+            <Link
+              to={"/offboarding"}
+              className="list-group-item list-group-item-action py-2 ripple"
+            >
+              <i className="fas fa-chart-line fa-fw me-3"></i>
+              <span>Offboarding</span>
+            </Link>
             <Link
               to={"/home"}
               className="list-group-item list-group-item-action py-2 ripple"

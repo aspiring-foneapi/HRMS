@@ -8,6 +8,7 @@ import { Register } from "./components/Register";
 import EmployeeDetails from "./components/EmployeeDetails";
 import ApplicantDetails from "./components/ApplicantDetails";
 import Employee from "./components/Employee";
+import Onboarding from "./components/Onboarding";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -37,6 +38,10 @@ function App() {
               element={
                 userData && userData._id ? <ApplicantDetails /> : <Login />
               }
+            />
+            <Route
+              path="/onboarding"
+              element={userData && userData._id ? <Onboarding /> : <Login />}
             />
             <Route
               path="/register"

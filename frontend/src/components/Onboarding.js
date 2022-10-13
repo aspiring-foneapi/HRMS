@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export const Register = () => {
+function Onboarding() {
+  const navigate = useNavigate();
   const [value, setValue] = useState({
     firstname: "",
     lastname: "",
     email: "",
-    password: "",
+    stage: "",
   });
-
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -22,22 +21,22 @@ export const Register = () => {
 
   const handleSubmit = async () => {
     console.log(value);
-    const { firstname, lastname, email, password } = value;
-    if (firstname && lastname && email && password) {
+    const { firstname, lastname, email, stage } = value;
+    if (firstname && lastname && email && stage) {
       await axios
-        .post("http://localhost:3001/register", value)
+        .post("http://localhost:3001/applicant-registration", value)
         .then((res) => alert(res.data.message));
       navigate("/home");
     } else {
       alert("Fill up all the Required fields");
-      navigate("/register");
+      navigate("/onboarding");
     }
   };
 
   return (
     <div className="Register-account">
       <form onSubmit={handleChange}>
-        <h4>Register New Employee</h4>
+        <h4>Register New Applicant</h4>
         <div className="mb-3">
           <label>First Name</label>
           <input
@@ -69,12 +68,12 @@ export const Register = () => {
           />
         </div>
         <div className="mb-3">
-          <label>Password</label>
+          <label>Stage</label>
           <input
-            type="password"
+            type="stage"
             className="form-control"
-            placeholder="Password"
-            name="password"
+            placeholder="stage"
+            name="stage"
             onChange={handleChange}
           />
         </div>
@@ -87,4 +86,6 @@ export const Register = () => {
       </form>
     </div>
   );
-};
+}
+
+export default Onboarding;

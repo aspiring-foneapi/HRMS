@@ -21,6 +21,12 @@ function ApplicantDetails() {
       });
   }, []);
 
+  const updateApplicant = (id) => {
+    const newStage = prompt("Enter stage: ");
+
+    axios.put("http://localhost:3001/update", { newStage, id });
+  };
+
   return (
     <div className="container">
       <h2 className="text-center">Applicants</h2>
@@ -38,6 +44,9 @@ function ApplicantDetails() {
               <td>{applicant.lastname}</td>
               <td>{applicant.email}</td>
               <td>{applicant.stage}</td>
+              <td>
+                <button>Onboard</button> <button>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

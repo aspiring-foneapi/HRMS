@@ -30,6 +30,7 @@ function EmployeeDetails(user) {
           <th>First Name</th>
           <th>Last Name</th>
           <th>Email</th>
+          <th>ID</th>
           <th>Password</th>
         </thead>
         <tbody>
@@ -46,6 +47,7 @@ function EmployeeDetails(user) {
               </td>
               <td>{employee.lastname}</td>
               <td>{employee.email}</td>
+              <td>{employee._id}</td>
               <td>{employee.password}</td>
             </tr>
           ))}

@@ -6,9 +6,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const cors = require("cors");
+const { application } = require("express");
 app.use(cors());
 
-const mongoUrl = "mongodb://localhost:37017/hrmsdb";
+// MongoDB Atlas
+const mongoUrl =
+  "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
+// Docker
+// const mongoUrl = "mongodb://localhost:37017/hrmsdb";
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
