@@ -9,6 +9,8 @@ const cors = require("cors");
 const { application } = require("express");
 app.use(cors());
 
+const { authPage } = require("./middlware");
+
 // MongoDB Atlas
 // const mongoUrl =
 //   "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
@@ -25,9 +27,11 @@ mongoose
   .catch((err) => {
     console.log("error in connecting to database");
   });
+
 const EmployeeDetailsSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
+  role: String,
   email: { type: String, required: true, unique: true },
   password: String,
 });
@@ -36,6 +40,57 @@ const EmployeeDetailsModel = new mongoose.model(
   "EmployeeDetailsModel",
   EmployeeDetailsSchema
 );
+
+app.post("/register", authPage(["admin"]), (req, res) => {
+  console.log(req.body);
+  const { firstname, lastname, email, role, password } = req.body;
+  EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
+    if (user) {
+      res.send({ message: "This email id is already registered" });
+    } else {
+      const user = new EmployeeDetailsModel({
+        firstname,
+        lastname,
+        email,
+        role,
+        password,
+      });
+      user.save();
+      res.send({ message: "Successfully Registered" });
+    }
+  });
+});
+
+app.post("/login", (req, res) => {
+  console.log(req.body);
+  const { email, password } = req.body;
+  EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
+    if (user) {
+      if (password === user.password) {
+        res.send({ message: "Login successful", user });
+      } else {
+        res.send({ message: "Password incorrect" });
+      }
+    } else {
+      res.send({ message: "This email is not registered" });
+    }
+  });
+});
+
+app.get("/users", (req, res) => {
+  EmployeeDetailsModel.find((err, val) => {
+    res.send({ data: val });
+  });
+});
+
+app.get("/users/:id", (req, res) => {
+  EmployeeDetailsModel.findOne({ _id: req.params.id }, req.body).then(
+    (employee) => {
+      res.send(employee);
+      console.log(employee);
+    }
+  );
+});
 
 const ApplicantDetailsSchema = new mongoose.Schema({
   firstname: String,
@@ -83,6 +138,23 @@ app.get("/applicants/:id", (req, res) => {
   );
 });
 
+app.delete("/applicants/:id", (req, res) => {
+  const { id } = req.params;
+  console.log(req.params);
+  console.log(req.params.id);
+
+  const deleted = ApplicantDetailsModel.findOne(
+    { id: req.params.id },
+    req.body
+  );
+  if (deleted) {
+    let applicant = ApplicantDetailsModel.filter({ qp });
+  } else {
+    res.send({ message: "The user id doens't exist." });
+  }
+  console.log(deleted);
+});
+
 app.put("/applicants/:id", (req, res) => {
   console.log(req.params.id);
   try {
@@ -97,43 +169,39 @@ app.put("/applicants/:id", (req, res) => {
   }
 });
 
-app.post("/register", (req, res) => {
+const OffboardingEmployeeSchema = new mongoose.Schema({
+  firstname: String,
+  lastname: String,
+  email: { type: String, required: true, unique: true },
+  password: String,
+});
+
+const OffboardingEmployeeModel = new mongoose.model(
+  "OffboardingEmployeeModel",
+  OffboardingEmployeeSchema
+);
+
+app.post("/offboarding", (req, res) => {
   console.log(req.body);
-  const { firstname, lastname, email, password } = req.body;
-  EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
+  const { firstname, lastname, email, stage } = req.body;
+  OffboardingEmployeeModel.findOne({ email: email }, (err, user) => {
     if (user) {
       res.send({ message: "This email id is already registered" });
     } else {
-      const user = new EmployeeDetailsModel({
+      const user = new OffboardingEmployeeModel({
         firstname,
         lastname,
         email,
-        password,
+        stage,
       });
       user.save();
-      res.send({ message: "Successfully Registered" });
+      res.send({ message: "Applicant is Successfully Registered" });
     }
   });
 });
 
-app.post("/login", (req, res) => {
-  console.log(req.body);
-  const { email, password } = req.body;
-  EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
-    if (user) {
-      if (password === user.password) {
-        res.send({ message: "Login successful", user });
-      } else {
-        res.send({ message: "Password incorrect" });
-      }
-    } else {
-      res.send({ message: "This email is not registered" });
-    }
-  });
-});
-
-app.get("/users", (req, res) => {
-  EmployeeDetailsModel.find((err, val) => {
+app.get("/offboarding-employees", (req, res) => {
+  OffboardingEmployeeModel.find((err, val) => {
     res.send({ data: val });
   });
 });
