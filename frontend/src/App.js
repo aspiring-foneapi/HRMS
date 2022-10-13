@@ -10,6 +10,7 @@ import ApplicantDetails from "./components/ApplicantDetails";
 import Employee from "./components/Employee";
 import Onboarding from "./components/Onboarding";
 import Update from "./components/Update";
+import Offboarding from "./components/Offboarding";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -42,15 +43,41 @@ function App() {
             />
             <Route
               path="/onboarding"
-              element={userData && userData._id ? <Onboarding /> : <Login />}
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Onboarding />
+                ) : (
+                  <Home />
+                )
+              }
+            />
+            <Route
+              path="/offboarding-employees"
+              element={userData && userData._id ? <Offboarding /> : <Login />}
             />
             <Route
               path="/applicants/:id"
-              element={userData && userData._id ? <Update /> : <Login />}
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Update />
+                ) : <Login /> ? (
+                  <ApplicantDetails />
+                ) : (
+                  <Login />
+                )
+              }
             />
             <Route
               path="/register"
-              element={userData && userData._id ? <Register /> : <Login />}
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Register />
+                ) : <Login /> ? (
+                  <Home />
+                ) : (
+                  <Login />
+                )
+              }
             />
             <Route path="/" element={<Login />} />
           </Routes>
