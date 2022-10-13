@@ -21,12 +21,6 @@ function ApplicantDetails() {
       });
   }, []);
 
-  const updateApplicant = (id) => {
-    const newStage = prompt("Enter stage: ");
-
-    axios.put("http://localhost:3001/update", { newStage, id });
-  };
-
   return (
     <div className="container">
       <h2 className="text-center">Applicants</h2>
@@ -36,16 +30,23 @@ function ApplicantDetails() {
           <th>Last Name</th>
           <th>Email</th>
           <th>Stage</th>
+          <th>ID</th>
         </thead>
         <tbody>
           {applicants.map((applicant) => (
-            <tr key={applicant.id}>
+            <tr key={applicant._id}>
               <td>{applicant.firstname}</td>
               <td>{applicant.lastname}</td>
               <td>{applicant.email}</td>
               <td>{applicant.stage}</td>
+              <td>{applicant._id}</td>
               <td>
-                <button>Onboard</button> <button>Delete</button>
+                <button
+                  onClick={() => navigate(`/applicants/${applicant._id}`)}
+                >
+                  Update
+                </button>{" "}
+                <button>Delete</button>
               </td>
             </tr>
           ))}

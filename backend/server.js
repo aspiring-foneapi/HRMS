@@ -10,10 +10,10 @@ const { application } = require("express");
 app.use(cors());
 
 // MongoDB Atlas
-const mongoUrl =
-  "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
+// const mongoUrl =
+//   "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
 // Docker
-// const mongoUrl = "mongodb://localhost:37017/hrmsdb";
+const mongoUrl = "mongodb://localhost:37017/hrmsdb";
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
@@ -72,6 +72,29 @@ app.get("/applicants", (req, res) => {
   ApplicantDetailsModel.find((err, val) => {
     res.send({ data: val });
   });
+});
+
+app.get("/applicants/:id", (req, res) => {
+  ApplicantDetailsModel.findOne({ _id: req.params.id }, req.body).then(
+    (applicant) => {
+      res.send(applicant);
+      console.log(applicant);
+    }
+  );
+});
+
+app.put("/applicants/:id", (req, res) => {
+  console.log(req.params.id);
+  try {
+    ApplicantDetailsModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      req.body
+    ).then((applicant) => {
+      res.send(applicant);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.post("/register", (req, res) => {
