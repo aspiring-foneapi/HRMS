@@ -11,6 +11,8 @@ import Employee from "./components/Employee";
 import Onboarding from "./components/Onboarding";
 import Update from "./components/Update";
 import Offboarding from "./components/Offboarding";
+import Onboard from "./components/Onboard";
+import Timeoff from "./components/Timeoff";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -22,23 +24,53 @@ function App() {
             <Route
               path="/home"
               element={
-                userData && userData._id ? <Home /> || <Register /> : <Login />
+                userData && userData._id && userData.role === "admin" ? (
+                  <Home />
+                ) : userData && userData._id && userData.role === "Employee" ? (
+                  <Employee />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/employees/:id"
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Employee />
+                ) : (
+                  <Login />
+                )
               }
             />
             <Route
               path="/employees"
               element={
-                userData && userData._id ? <EmployeeDetails /> : <Login />
+                userData && userData._id && userData.role === "admin" ? (
+                  <EmployeeDetails />
+                ) : (
+                  <Login />
+                )
               }
             />
             <Route
-              path="/employees/:email"
-              element={userData && userData._id ? <Employee /> : <Login />}
+              path="/timeoff/:id"
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Timeoff />
+                ) : (
+                  <Login />
+                )
+              }
             />
             <Route
               path="/applicants"
               element={
-                userData && userData._id ? <ApplicantDetails /> : <Login />
+                userData && userData._id && userData.role === "admin" ? (
+                  <ApplicantDetails />
+                ) : (
+                  <Login />
+                )
               }
             />
             <Route
@@ -53,13 +85,31 @@ function App() {
             />
             <Route
               path="/offboarding-employees"
-              element={userData && userData._id ? <Offboarding /> : <Login />}
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Offboarding />
+                ) : (
+                  <Login />
+                )
+              }
             />
             <Route
               path="/applicants/:id"
               element={
                 userData && userData._id && userData.role === "admin" ? (
                   <Update />
+                ) : <Login /> ? (
+                  <ApplicantDetails />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/applicants/onboard/:id"
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <Onboard />
                 ) : <Login /> ? (
                   <ApplicantDetails />
                 ) : (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 
-function Employee() {
+function Onboard() {
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -12,13 +12,11 @@ function Employee() {
     email: "",
     role: "",
     password: "",
-    timeoff: "",
   });
 
   useEffect(() => {
-    console.log("useeffect part");
     axios
-      .get(`http://localhost:3001/users/${id}`)
+      .get(`http://localhost:3001/applicants/${id}`)
       .then((res) => {
         console.log("First", res.data);
         setUpdateApplicant(res.data);
@@ -37,11 +35,23 @@ function Employee() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateApplicant);
-    await axios
-      .put(`http://localhost:3001/users/${id}`, updateApplicant)
-      .then((res) => alert("Applicant is Updated", res));
-    navigate("/employees");
+    console.log(updateApplicant);
+    const { firstname, lastname, email, password } = updateApplicant;
+    if (firstname && lastname && email && password) {
+      await axios
+        .post("http://localhost:3001/register", updateApplicant)
+        .then((res) => alert(res.data.message))
+        .then(
+          axios
+            .delete(`http://localhost:3001/applicants/${updateApplicant._id}`)
+            .then(() => console.log("Successfully deleted"))
+        );
+      console.log("successfully deleted");
+      navigate("/home");
+    } else {
+      alert("Fill up all the Required fields");
+      navigate(`/applicants/onboard/${id}`);
+    }
   };
 
   return (
@@ -63,12 +73,9 @@ function Employee() {
           </div>
         </nav>
       </header>
-      <div className="Register-account p-20vh">
+      <div className="Register-account">
         <form onSubmit={handleChange}>
-          <h4>
-            Employee, {updateApplicant.firstname} {updateApplicant.lastname}
-          </h4>
-          <p>{updateApplicant.role}</p>
+          <h4>Register New Applicant</h4>
           <div className="mb-3">
             <label>First Name</label>
             <input
@@ -92,17 +99,6 @@ function Employee() {
             />
           </div>
           <div className="mb-3">
-            <label>Password</label>
-            <input
-              value={updateApplicant.password}
-              type="text"
-              className="form-control"
-              placeholder="Last name"
-              name="lastname"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
             <label>Email</label>
             <input
               value={updateApplicant.email}
@@ -116,36 +112,28 @@ function Employee() {
           <div className="mb-3">
             <label>Role</label>
             <input
-              value={updateApplicant.role}
-              type="stage"
+              type="role"
               className="form-control"
-              placeholder="stage"
-              name="stage"
+              placeholder="Role"
+              name="role"
               onChange={handleChange}
             />
           </div>
           <div className="mb-3">
-            <label>Timeoff Remaining</label>
+            <label>Password</label>
             <input
-              value={updateApplicant.timeoff}
-              type="timeoff"
+              type="password"
               className="form-control"
-              placeholder="timeoff"
-              name="timeoff"
+              placeholder="Password"
+              name="password"
               onChange={handleChange}
             />
           </div>
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate(`/timeoff/${updateApplicant._id}`)}
-          >
-            Apply Leave/Time Off
-          </button>{" "}
           <button onClick={handleSubmit} className="btn btn-primary">
-            Update
+            Onboard
           </button>{" "}
           <button
-            onClick={() => navigate("/employees")}
+            onClick={() => navigate("/applicants")}
             className="btn btn-primary"
           >
             Cancel
@@ -156,4 +144,4 @@ function Employee() {
   );
 }
 
-export default Employee;
+export default Onboard;

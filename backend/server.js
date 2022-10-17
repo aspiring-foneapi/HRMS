@@ -1,12 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const cors = require("cors");
-const { application } = require("express");
 app.use(cors());
 
 const { authPage } = require("./middlware");
@@ -34,6 +34,7 @@ const EmployeeDetailsSchema = new mongoose.Schema({
   role: String,
   email: { type: String, required: true, unique: true },
   password: String,
+  timeoff: Number,
 });
 
 const EmployeeDetailsModel = new mongoose.model(
@@ -41,7 +42,7 @@ const EmployeeDetailsModel = new mongoose.model(
   EmployeeDetailsSchema
 );
 
-app.post("/register", authPage(["admin"]), (req, res) => {
+app.post("/register", (req, res) => {
   console.log(req.body);
   const { firstname, lastname, email, role, password } = req.body;
   EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
@@ -61,13 +62,15 @@ app.post("/register", authPage(["admin"]), (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", bodyParser.urlencoded({ extended: false }), (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
   EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
     if (user) {
       if (password === user.password) {
         res.send({ message: "Login successful", user });
+
+        console.log("user", email);
       } else {
         res.send({ message: "Password incorrect" });
       }
@@ -90,6 +93,35 @@ app.get("/users/:id", (req, res) => {
       console.log(employee);
     }
   );
+});
+
+app.put("/users/:id", (req, res) => {
+  console.log(req.params.id);
+  try {
+    EmployeeDetailsModel.findByIdAndUpdate(
+      { _id: req.params.id },
+      req.body
+    ).then((employee) => {
+      res.send(employee);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.delete("/users/:id", async (req, res) => {
+  console.log(req.params);
+  console.log(req.params.id);
+
+  try {
+    EmployeeDetailsModel.findOneAndDelete({ _id: req.params.id }).then(
+      (employee) => {
+        res.send(employee);
+      }
+    );
+  } catch (error) {
+    res.send(alert("Error in deleting"));
+  }
 });
 
 const ApplicantDetailsSchema = new mongoose.Schema({
@@ -138,21 +170,19 @@ app.get("/applicants/:id", (req, res) => {
   );
 });
 
-app.delete("/applicants/:id", (req, res) => {
-  const { id } = req.params;
+app.delete("/applicants/:id", async (req, res) => {
   console.log(req.params);
   console.log(req.params.id);
 
-  const deleted = ApplicantDetailsModel.findOne(
-    { id: req.params.id },
-    req.body
-  );
-  if (deleted) {
-    let applicant = ApplicantDetailsModel.filter({ qp });
-  } else {
-    res.send({ message: "The user id doens't exist." });
+  try {
+    ApplicantDetailsModel.findOneAndDelete({ _id: req.params.id }).then(
+      (applicant) => {
+        res.send(applicant);
+      }
+    );
+  } catch (error) {
+    res.send(alert("Error in deleting"));
   }
-  console.log(deleted);
 });
 
 app.put("/applicants/:id", (req, res) => {
@@ -172,6 +202,7 @@ app.put("/applicants/:id", (req, res) => {
 const OffboardingEmployeeSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
+  role: String,
   email: { type: String, required: true, unique: true },
   password: String,
 });
@@ -183,7 +214,7 @@ const OffboardingEmployeeModel = new mongoose.model(
 
 app.post("/offboarding", (req, res) => {
   console.log(req.body);
-  const { firstname, lastname, email, stage } = req.body;
+  const { firstname, lastname, email, role, password } = req.body;
   OffboardingEmployeeModel.findOne({ email: email }, (err, user) => {
     if (user) {
       res.send({ message: "This email id is already registered" });
@@ -192,7 +223,8 @@ app.post("/offboarding", (req, res) => {
         firstname,
         lastname,
         email,
-        stage,
+        role,
+        password,
       });
       user.save();
       res.send({ message: "Applicant is Successfully Registered" });
@@ -204,6 +236,30 @@ app.get("/offboarding-employees", (req, res) => {
   OffboardingEmployeeModel.find((err, val) => {
     res.send({ data: val });
   });
+});
+
+app.get("/offboarding-employees/:id", (req, res) => {
+  OffboardingEmployeeModel.findOne({ _id: req.params.id }, req.body).then(
+    (applicant) => {
+      res.send(applicant);
+      console.log(applicant);
+    }
+  );
+});
+
+app.delete("/offboarding-employees/:id", async (req, res) => {
+  console.log(req.params);
+  console.log(req.params.id);
+
+  try {
+    OffboardingEmployeeModel.findOneAndDelete({ _id: req.params.id }).then(
+      (employee) => {
+        res.send(employee);
+      }
+    );
+  } catch (error) {
+    res.send(alert("Error in deleting"));
+  }
 });
 
 const PORT = 3001;

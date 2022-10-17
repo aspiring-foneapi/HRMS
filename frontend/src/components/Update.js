@@ -19,7 +19,6 @@ function Update() {
       .then((res) => {
         console.log("First", res.data);
         setUpdateApplicant(res.data);
-        console.log(updateApplicant.firstname);
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +34,7 @@ function Update() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clickec", updateApplicant);
+    console.log("Submit button clicked", updateApplicant);
     const { firstname, lastname, email, stage } = updateApplicant;
     if (firstname && lastname && email && stage) {
       await axios

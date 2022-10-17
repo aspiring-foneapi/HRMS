@@ -90,7 +90,7 @@ export const Register = () => {
           />
         </div>
         <button onClick={handleSubmit} className="btn btn-primary">
-          Register
+          Register New Employee
         </button>{" "}
         <button onClick={() => navigate("/home")} className="btn btn-primary">
           Cancel
