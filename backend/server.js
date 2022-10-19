@@ -9,13 +9,13 @@ app.use(express.urlencoded({ extended: false }));
 const cors = require("cors");
 app.use(cors());
 
-const { authPage } = require("./middlware");
+// const { authPage } = require("./middlware");
 
 // MongoDB Atlas
-// const mongoUrl =
-//   "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
+const mongoUrl =
+  "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
 // Docker
-const mongoUrl = "mongodb://localhost:37017/hrmsdb";
+// const mongoUrl = "mongodb://localhost:37017/hrmsdb";
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
@@ -34,7 +34,12 @@ const EmployeeDetailsSchema = new mongoose.Schema({
   role: String,
   email: { type: String, required: true, unique: true },
   password: String,
+  joindate: String,
   timeoff: Number,
+  timeofffromdate: String,
+  timeofftodate: String,
+  leavefromdate: String,
+  leavetodate: String,
 });
 
 const EmployeeDetailsModel = new mongoose.model(
@@ -55,6 +60,8 @@ app.post("/register", (req, res) => {
         email,
         role,
         password,
+        timeoff: 5,
+        joindate: new Date(),
       });
       user.save();
       res.send({ message: "Successfully Registered" });
@@ -65,19 +72,22 @@ app.post("/register", (req, res) => {
 app.post("/login", bodyParser.urlencoded({ extended: false }), (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
-  EmployeeDetailsModel.findOne({ email: email }, (err, user) => {
-    if (user) {
-      if (password === user.password) {
-        res.send({ message: "Login successful", user });
+  EmployeeDetailsModel.findOne(
+    { email: email, role: (role = "admin") },
+    (err, user) => {
+      if (user) {
+        if (password === user.password) {
+          res.send({ message: "Login successful", user });
 
-        console.log("user", email);
+          console.log("user", email);
+        } else {
+          res.send({ message: "Password incorrect" });
+        }
       } else {
-        res.send({ message: "Password incorrect" });
+        res.send({ message: "This email is not registered as admin" });
       }
-    } else {
-      res.send({ message: "This email is not registered" });
     }
-  });
+  );
 });
 
 app.get("/users", (req, res) => {
@@ -129,6 +139,7 @@ const ApplicantDetailsSchema = new mongoose.Schema({
   lastname: String,
   email: { type: String, required: true, unique: true },
   stage: Number,
+  joindate: String,
 });
 
 const ApplicantDetailsModel = new mongoose.model(
@@ -148,6 +159,7 @@ app.post("/applicant-registration", (req, res) => {
         lastname,
         email,
         stage,
+        joindate: new Date(),
       });
       user.save();
       res.send({ message: "Applicant is Successfully Registered" });
@@ -205,6 +217,7 @@ const OffboardingEmployeeSchema = new mongoose.Schema({
   role: String,
   email: { type: String, required: true, unique: true },
   password: String,
+  joindate: String,
 });
 
 const OffboardingEmployeeModel = new mongoose.model(
@@ -225,6 +238,7 @@ app.post("/offboarding", (req, res) => {
         email,
         role,
         password,
+        joindate: new Date(),
       });
       user.save();
       res.send({ message: "Applicant is Successfully Registered" });
