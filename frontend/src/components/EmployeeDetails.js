@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./EmployeeDetails.css";
 import { Link, useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 function EmployeeDetails(user) {
   const [employees, setEmployees] = useState([]);
   const [offboarding, setOffboarding] = useState([]);
+  const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
 
@@ -55,7 +57,7 @@ function EmployeeDetails(user) {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <header>
         <nav className="navbar navbar-light bg-light">
           <div className="container-fluid">
@@ -63,13 +65,11 @@ function EmployeeDetails(user) {
               ASG Platform Talent Center
             </Link>
             <form className="d-flex">
-              <input className="form-control me-2" placeholder="Search..." />
-              <button
-                className="btn btn-outline-success me-2"
-                onClick={() => navigate("/home")}
-              >
-                Search
-              </button>
+              <input
+                className="form-control me-2"
+                placeholder="Search..."
+                onChange={(e) => setSearch(e.target.value)}
+              />
               <Link to={"/register"}>
                 <button className="btn btn-outline-success me-2">
                   Register
@@ -85,51 +85,72 @@ function EmployeeDetails(user) {
           </div>
         </nav>
       </header>
-      <div className="container">
-        <h2 className="text-center">Employees</h2>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>ID</th>
-          </thead>
-          <tbody>
-            {employees.map((employee) => (
-              <tr key={employee._id}>
-                <td>
-                  <Link
-                    className="list-group-item list-group-item-action py-2 ripple"
-                    aria-current="true"
-                    to={`/employees/${employee._id}`}
-                  >
-                    {employee.firstname}
-                  </Link>
-                </td>
-                <td>{employee.lastname}</td>
-                <td>{employee.email}</td>
-                <td>{employee.role}</td>
-                <td>{employee._id}</td>
-                <td>
-                  <button onClick={handleOffboard} id={employee._id}>
-                    Offboard
-                  </button>
-                </td>
-                <td>
-                  <button onClick={""} id={employee._id}>
-                    Apply time off
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button onClick={() => navigate("/home")} className="btn btn-primary">
-          Home
-        </button>
-      </div>
-    </div>
+      <Container>
+        <div>
+          <div className="container">
+            <h2 className="text-center">Employees</h2>
+            <table className="table table-bordered table-striped">
+              <thead>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>ID</th>
+              </thead>
+              <tbody>
+                {employees
+                  .filter((employee) =>
+                    employee.firstname.toLowerCase().includes(search)
+                  )
+                  .map((employee) => (
+                    <tr key={employee._id}>
+                      <td>
+                        <Link
+                          className="list-group-item list-group-item-action py-2 ripple"
+                          aria-current="true"
+                          to={`/employees/${employee._id}`}
+                        >
+                          {employee.firstname}
+                        </Link>
+                      </td>
+                      <td>{employee.lastname}</td>
+                      <td>{employee.email}</td>
+                      <td>{employee.role}</td>
+                      <td>{employee._id}</td>
+                      <td>
+                        <button
+                          onClick={handleOffboard}
+                          id={employee._id}
+                          className="btn btn-success me-2"
+                        >
+                          Offboard
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            navigate(`/sendinvite/${employee._id}`)
+                          }
+                          id={employee._id}
+                          className="btn btn-success me-2"
+                        >
+                          Send Invitation mail
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+            <button
+              onClick={() => navigate("/home")}
+              className="btn btn-primary"
+            >
+              Home
+            </button>
+          </div>
+        </div>
+      </Container>
+    </React.Fragment>
   );
 }
 

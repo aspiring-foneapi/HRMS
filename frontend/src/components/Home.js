@@ -15,13 +15,6 @@ function Home() {
               ASG Platform Talent Center
             </Link>
             <form className="d-flex">
-              <input className="form-control me-2" placeholder="Search" />
-              <button
-                className="btn btn-outline-success me-2"
-                onClick={() => navigate("/home")}
-              >
-                Search
-              </button>
               <Link to={"/register"}>
                 <button className="btn btn-outline-success me-2">
                   Register

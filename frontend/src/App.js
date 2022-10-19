@@ -13,6 +13,7 @@ import Update from "./components/Update";
 import Offboarding from "./components/Offboarding";
 import Onboard from "./components/Onboard";
 import Timeoff from "./components/Timeoff";
+import SendInvitation from "./components/SendInvitation";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -26,8 +27,6 @@ function App() {
               element={
                 userData && userData._id && userData.role === "admin" ? (
                   <Home />
-                ) : userData && userData._id && userData.role === "Employee" ? (
-                  <Employee />
                 ) : (
                   <Login />
                 )
@@ -48,6 +47,16 @@ function App() {
               element={
                 userData && userData._id && userData.role === "admin" ? (
                   <EmployeeDetails />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/sendinvite/:id"
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <SendInvitation />
                 ) : (
                   <Login />
                 )

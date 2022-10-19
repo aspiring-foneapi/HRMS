@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { Container } from "react-bootstrap";
 
 function Onboard() {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ function Onboard() {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <header>
         <nav className="navbar navbar-light bg-light">
           <div className="container-fluid">
@@ -73,74 +74,78 @@ function Onboard() {
           </div>
         </nav>
       </header>
-      <div className="Register-account">
-        <form onSubmit={handleChange}>
-          <h4>Register New Applicant</h4>
-          <div className="mb-3">
-            <label>First Name</label>
-            <input
-              value={updateApplicant.firstname}
-              type="text"
-              placeholder="First name"
-              className="form-control"
-              name="firstname"
-              onChange={handleChange}
-            />
+      <Container>
+        <div>
+          <div className="Register-account">
+            <form onSubmit={handleChange}>
+              <h4>Register New Applicant</h4>
+              <div className="mb-3">
+                <label>First Name</label>
+                <input
+                  value={updateApplicant.firstname}
+                  type="text"
+                  placeholder="First name"
+                  className="form-control"
+                  name="firstname"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Last Name</label>
+                <input
+                  value={updateApplicant.lastname}
+                  type="text"
+                  className="form-control"
+                  placeholder="Last name"
+                  name="lastname"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Email</label>
+                <input
+                  value={updateApplicant.email}
+                  type="text"
+                  className="form-control"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Role</label>
+                <input
+                  type="role"
+                  className="form-control"
+                  placeholder="Role"
+                  name="role"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  placeholder="Password"
+                  name="password"
+                  onChange={handleChange}
+                />
+              </div>
+              <button onClick={handleSubmit} className="btn btn-primary">
+                Onboard
+              </button>{" "}
+              <button
+                onClick={() => navigate("/applicants")}
+                className="btn btn-primary"
+              >
+                Cancel
+              </button>
+            </form>
           </div>
-          <div className="mb-3">
-            <label>Last Name</label>
-            <input
-              value={updateApplicant.lastname}
-              type="text"
-              className="form-control"
-              placeholder="Last name"
-              name="lastname"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Email</label>
-            <input
-              value={updateApplicant.email}
-              type="text"
-              className="form-control"
-              placeholder="Email"
-              name="email"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Role</label>
-            <input
-              type="role"
-              className="form-control"
-              placeholder="Role"
-              name="role"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Password"
-              name="password"
-              onChange={handleChange}
-            />
-          </div>
-          <button onClick={handleSubmit} className="btn btn-primary">
-            Onboard
-          </button>{" "}
-          <button
-            onClick={() => navigate("/applicants")}
-            className="btn btn-primary"
-          >
-            Cancel
-          </button>
-        </form>
-      </div>
-    </div>
+        </div>
+      </Container>
+    </React.Fragment>
   );
 }
 

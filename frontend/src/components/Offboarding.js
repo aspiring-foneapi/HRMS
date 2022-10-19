@@ -4,6 +4,7 @@ import axios from "axios";
 
 function Offboarding() {
   const [offboarding, setOffboarding] = useState([]);
+  const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
 
@@ -35,6 +36,11 @@ function Offboarding() {
             ASG Platform Talent Center
           </Link>
           <form className="d-flex">
+            <input
+              className="form-control me-2"
+              placeholder="Search..."
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <button
               className="btn btn-outline-success me-2"
               onClick={() => navigate("/")}
@@ -45,7 +51,7 @@ function Offboarding() {
         </div>
       </nav>
       <div className="container">
-        <h2 className="text-center">Employees</h2>
+        <h2 className="text-center">Offboarding Employees</h2>
         <table className="table table-bordered table-striped">
           <thead>
             <th>First Name</th>
@@ -56,32 +62,35 @@ function Offboarding() {
             <th>Password</th>
           </thead>
           <tbody>
-            {offboarding.map((employee) => (
-              <tr key={employee.id}>
-                <td>
-                  <Link
-                    className="list-group-item list-group-item-action py-2 ripple"
-                    aria-current="true"
-                    to={`/employees/${employee.email}`}
-                  >
-                    {employee.firstname}
-                  </Link>
-                </td>
-                <td>{employee.lastname}</td>
-                <td>{employee.email}</td>
-                <td>{employee._id}</td>
-                <td>{employee.role}</td>
-                <td>{employee.password}</td>
-                <td>
-                  <button onClick={handleComplete} id={employee._id}>
-                    Offboard Completed
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {offboarding
+              .filter((employee) =>
+                employee.firstname.toLowerCase().includes(search)
+              )
+              .map((employee) => (
+                <tr key={employee.id}>
+                  <td>{employee.firstname}</td>
+                  <td>{employee.lastname}</td>
+                  <td>{employee.email}</td>
+                  <td>{employee._id}</td>
+                  <td>{employee.role}</td>
+                  <td>{employee.password}</td>
+                  <td>
+                    <button
+                      onClick={handleComplete}
+                      id={employee._id}
+                      className="btn btn-success me-2"
+                    >
+                      Offboard Completed
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
-        <button onClick={() => navigate("/home")} className="btn btn-primary">
+        <button
+          onClick={() => navigate("/home")}
+          className="btn btn-success me-2"
+        >
           Home
         </button>
       </div>
