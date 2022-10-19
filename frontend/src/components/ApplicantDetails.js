@@ -11,12 +11,9 @@ function ApplicantDetails() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/applicants")
+      .get("https://hrms-api.onrender.com/applicants")
       .then((res) => {
-        console.log(res);
         setApplicants(res.data.data);
-        console.log(res.data.data);
-        console.log(res.data.data[0].firstname);
       })
       .catch((err) => {
         console.log(err);

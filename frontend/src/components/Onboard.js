@@ -17,9 +17,8 @@ function Onboard() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/applicants/${id}`)
+      .get(`https://hrms-api.onrender.com/applicants/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateApplicant(res.data);
       })
       .catch((err) => {
@@ -36,18 +35,18 @@ function Onboard() {
   };
 
   const handleSubmit = async () => {
-    console.log(updateApplicant);
     const { firstname, lastname, email, password } = updateApplicant;
     if (firstname && lastname && email && password) {
       await axios
-        .post("http://localhost:3001/register", updateApplicant)
+        .post("https://hrms-api.onrender.com/register", updateApplicant)
         .then((res) => alert(res.data.message))
         .then(
           axios
-            .delete(`http://localhost:3001/applicants/${updateApplicant._id}`)
+            .delete(
+              `https://hrms-api.onrender.com/applicants/${updateApplicant._id}`
+            )
             .then(() => console.log("Successfully deleted"))
         );
-      console.log("successfully deleted");
       navigate("/home");
     } else {
       alert("Fill up all the Required fields");

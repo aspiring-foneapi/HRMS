@@ -21,11 +21,10 @@ function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    console.log(value);
     const { firstname, lastname, email, stage } = value;
     if (firstname && lastname && email && stage) {
       await axios
-        .post("http://localhost:3001/applicant-registration", value)
+        .post("https://hrms-api.onrender.com/applicant-registration", value)
         .then((res) => alert(res.data.message));
       navigate("/home");
     } else {

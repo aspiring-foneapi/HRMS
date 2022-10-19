@@ -13,12 +13,9 @@ function EmployeeDetails(user) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/users")
+      .get("https://hrms-api.onrender.com/users")
       .then((res) => {
-        console.log(res);
         setEmployees(res.data.data);
-        console.log(res.data.data);
-        console.log(res.data.data[0].firstname);
       })
       .catch((err) => {
         console.log(err);
@@ -26,7 +23,6 @@ function EmployeeDetails(user) {
   }, []);
 
   // const handleDelete = async (id) => {
-  //   console.log(id.target.id);
   //   const deleteId = id.target.id;
   //   await axios
   //     .delete(`http://localhost:3001/users/${deleteId}`)
@@ -34,26 +30,22 @@ function EmployeeDetails(user) {
   // };
 
   const handleOffboard = async (id) => {
-    console.log("Offboarding");
     const employeeId = id.target.id;
-    console.log(employeeId);
-    await axios.get(`http://localhost:3001/users/${employeeId}`).then((res) => {
-      console.log(res.data);
-      setOffboarding(res.data);
-      console.log(offboarding);
-      const firstname = res.data.firstname;
-      const lastname = res.data.lastname;
-      const email = res.data.email;
-      const role = res.data.role;
-      const password = res.data.password;
-      const id = res.data._id;
-      console.log(firstname, lastname, email, role, password);
-      const data = { firstname, lastname, email, role, password };
-      console.log(id);
-      axios.post("http://localhost:3001/offboarding", data);
-      axios.delete(`http://localhost:3001/users/${id}`);
-      navigate("/home");
-    });
+    await axios
+      .get(`https://hrms-api.onrender.com/users/${employeeId}`)
+      .then((res) => {
+        setOffboarding(res.data);
+        const firstname = res.data.firstname;
+        const lastname = res.data.lastname;
+        const email = res.data.email;
+        const role = res.data.role;
+        const password = res.data.password;
+        const id = res.data._id;
+        const data = { firstname, lastname, email, role, password };
+        axios.post("https://hrms-api.onrender.com/offboarding", data);
+        axios.delete(`https://hrms-api.onrender.com/users/${id}`);
+        navigate("/home");
+      });
   };
 
   return (

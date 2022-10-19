@@ -17,9 +17,8 @@ function Update() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/applicants/${id}`)
+      .get(`https://hrms-api.onrender.com/applicants/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateApplicant(res.data);
       })
       .catch((err) => {
@@ -36,11 +35,10 @@ function Update() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateApplicant);
     const { firstname, lastname, email, stage } = updateApplicant;
     if (firstname && lastname && email && stage) {
       await axios
-        .put(`http://localhost:3001/applicants/${id}`, updateApplicant)
+        .put(`https://hrms-api.onrender.com/applicants/${id}`, updateApplicant)
         .then((res) => alert("Applicant is Updated", res));
       navigate("/applicants");
     } else {

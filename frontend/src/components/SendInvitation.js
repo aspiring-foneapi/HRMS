@@ -11,11 +11,9 @@ function SendInvitation() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/users/${id}`)
+      .get(`https://hrms-api.onrender.com/users/${id}`)
       .then((res) => {
-        console.log(res);
         setEmployee(res.data);
-        console.log(res.data.firstname);
       })
       .catch((err) => {
         console.log(err);

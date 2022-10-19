@@ -17,11 +17,9 @@ function Employee() {
   });
 
   useEffect(() => {
-    console.log("useeffect part");
     axios
-      .get(`http://localhost:3001/users/${id}`)
+      .get(`https://hrms-api.onrender.com/users/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateEmployee(res.data);
       })
       .catch((err) => {
@@ -38,9 +36,8 @@ function Employee() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateEmployee);
     await axios
-      .put(`http://localhost:3001/users/${id}`, updateEmployee)
+      .put(`https://hrms-api.onrender.com/users/${id}`, updateEmployee)
       .then((res) => alert("Applicant is Updated", res));
     navigate("/employees");
   };
