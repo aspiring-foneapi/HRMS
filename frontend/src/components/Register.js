@@ -23,10 +23,11 @@ export const Register = () => {
   };
 
   const handleSubmit = async () => {
+    console.log(value);
     const { firstname, lastname, email, password } = value;
     if (firstname && lastname && email && password) {
       await axios
-        .post("https://hrms-api.onrender.com/register", value)
+        .post("http://localhost:3001/register", value)
         .then((res) => alert(res.data.message));
       navigate("/home");
     } else {

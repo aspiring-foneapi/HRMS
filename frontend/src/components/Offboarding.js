@@ -10,8 +10,9 @@ function Offboarding() {
 
   useEffect(() => {
     axios
-      .get("https://hrms-api.onrender.com/offboarding-employees")
+      .get("http://localhost:3001/offboarding-employees")
       .then((res) => {
+        console.log(res);
         setOffboarding(res.data.data);
       })
       .catch((err) => {
@@ -20,11 +21,10 @@ function Offboarding() {
   }, []);
 
   const handleComplete = async (id) => {
+    console.log(id.target.id);
     const employeeId = id.target.id;
     await axios
-      .delete(
-        `https://hrms-api.onrender.com/offboarding-employees/${employeeId}`
-      )
+      .delete(`http://localhost:3001/offboarding-employees/${employeeId}`)
       .then(() => alert("Offboarding completed"));
     navigate("/home");
   };
