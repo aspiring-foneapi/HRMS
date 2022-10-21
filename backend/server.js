@@ -138,7 +138,7 @@ const ApplicantDetailsSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
   email: { type: String, required: true, unique: true },
-  stage: Number,
+  stage: String,
   joindate: String,
 });
 
