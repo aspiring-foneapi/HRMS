@@ -89,13 +89,18 @@ function Onboarding() {
               </div>
               <div className="mb-3">
                 <label>Stage</label>
-                <input
-                  type="stage"
+                <select
+                  type="text"
                   className="form-control"
-                  placeholder="stage"
+                  placeholder="Email"
                   name="stage"
                   onChange={handleChange}
-                />
+                >
+                  <option> </option>
+                  <option>new hire</option>
+                  <option>onboarding initiated</option>
+                  <option>onboarding completed</option>
+                </select>
               </div>
               <button onClick={handleSubmit} className="btn btn-primary">
                 Add New Applicant

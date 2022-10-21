@@ -105,14 +105,18 @@ function Update() {
             </div>
             <div className="mb-3">
               <label>Stage</label>
-              <input
-                value={updateApplicant.stage}
-                type="stage"
+              <select
+                type="text"
                 className="form-control"
-                placeholder="stage"
+                placeholder="Email"
                 name="stage"
                 onChange={handleChange}
-              />
+              >
+                <option> </option>
+                <option>new hire</option>
+                <option>onboarding initiated</option>
+                <option>onboarding completed</option>
+              </select>
             </div>
             <div className="mb-3">
               <label>Join Date</label>
