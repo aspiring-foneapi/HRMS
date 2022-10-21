@@ -14,6 +14,7 @@ import Offboarding from "./components/Offboarding";
 import Onboard from "./components/Onboard";
 import Timeoff from "./components/Timeoff";
 import SendInvitation from "./components/SendInvitation";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   const [userData, setUserData] = useState();

@@ -3,11 +3,14 @@ import axios from "axios";
 import "./EmployeeDetails.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 function EmployeeDetails(user) {
   const [employees, setEmployees] = useState([]);
   const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
+  const [searchRole, setSearchRole] = useState("");
 
   const navigate = useNavigate();
 
@@ -81,6 +84,18 @@ function EmployeeDetails(user) {
         <div>
           <div className="container">
             <h2 className="text-center">Employees</h2>
+            <form className="d-flex">
+              <h5>sort by: </h5>
+              <select
+                className="me-2"
+                value={searchRole}
+                onChange={(e) => setSearchRole(e.target.value)}
+              >
+                <option> </option>
+                <option>admin</option>
+                <option>employee</option>
+              </select>
+            </form>
             <table className="table table-bordered table-striped">
               <thead>
                 <th>First Name</th>
@@ -94,6 +109,12 @@ function EmployeeDetails(user) {
                   .filter((employee) =>
                     employee.firstname.toLowerCase().includes(search)
                   )
+                  .filter((employee) =>
+                    EmployeeDetails
+                      ? employee.role.toLowerCase().includes(searchRole)
+                      : EmployeeDetails
+                  )
+
                   .map((employee) => (
                     <tr key={employee._id}>
                       <td>
