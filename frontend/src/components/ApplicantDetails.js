@@ -92,12 +92,6 @@ function ApplicantDetails() {
                       applicant.firstname.toLowerCase().includes(search) ||
                       applicant.firstname.toUpperCase().includes(search)
                   )
-                  .filter(
-                    (applicant) =>
-                      applicant.stage.includes(search) ||
-                      applicant.stage.toLowerCase().includes(search) ||
-                      applicant.stage.toUpperCase().includes(search)
-                  )
                   .slice(pagesVisited, pagesVisited + usersPerPage)
                   .map((applicant) => (
                     <tr key={applicant._id}>
