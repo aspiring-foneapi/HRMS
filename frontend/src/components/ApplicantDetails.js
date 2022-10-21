@@ -66,11 +66,9 @@ function ApplicantDetails() {
                 onChange={(e) => setSearchStage(e.target.value)}
               >
                 <option>Stage</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option>New hire</option>
+                <option>Onboarding Initiated</option>
+                <option>Onboarding Completed</option>
               </select>
             </form>
             <table className="table table-bordered table-striped">
@@ -94,7 +92,12 @@ function ApplicantDetails() {
                       applicant.firstname.toLowerCase().includes(search) ||
                       applicant.firstname.toUpperCase().includes(search)
                   )
-                  .filter((applicant) => applicant.stage == searchStage)
+                  .filter(
+                    (applicant) =>
+                      applicant.stage.includes(search) ||
+                      applicant.stage.toLowerCase().includes(search) ||
+                      applicant.stage.toUpperCase().includes(search)
+                  )
                   .slice(pagesVisited, pagesVisited + usersPerPage)
                   .map((applicant) => (
                     <tr key={applicant._id}>
