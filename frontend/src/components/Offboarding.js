@@ -75,8 +75,11 @@ function Offboarding() {
               .sort((a, b) =>
                 a.firstname.toLowerCase() > b.firstname.toLowerCase() ? 1 : -1
               )
-              .filter((employee) =>
-                employee.firstname.toLowerCase().includes(search)
+              .filter(
+                (employee) =>
+                  employee.firstname.toLowerCase().includes(search) ||
+                  employee.firstname.toUpperCase().includes(search) ||
+                  employee.firstname.includes(search)
               )
               .slice(pagesVisited, pagesVisited + usersPerPage)
               .map((employee) => (

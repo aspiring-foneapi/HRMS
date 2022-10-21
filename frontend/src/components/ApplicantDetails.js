@@ -114,6 +114,17 @@ function ApplicantDetails() {
                       <td>{applicant.stage}</td>
                       <td>{applicant._id}</td>
                       <td>
+                        <button
+                          onClick={() =>
+                            navigate(`/sendwelcomemail/${applicant._id}`)
+                          }
+                          id={applicant._id}
+                          className="btn btn-success me-2"
+                        >
+                          Send Invitation mail
+                        </button>
+                      </td>
+                      <td>
                         {" "}
                         <button
                           onClick={() =>
