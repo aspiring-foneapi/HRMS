@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 
 function Offboarding() {
   const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
 
   const navigate = useNavigate();
 
@@ -28,6 +30,13 @@ function Offboarding() {
       .then(() => alert("Offboarding completed"));
     navigate("/home");
   };
+
+  const usersPerPage = 8;
+  const pagesVisited = pageNumber * usersPerPage;
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
+
   return (
     <div>
       <nav className="navbar navbar-light bg-light">
@@ -63,9 +72,16 @@ function Offboarding() {
           </thead>
           <tbody>
             {offboarding
-              .filter((employee) =>
-                employee.firstname.toLowerCase().includes(search)
+              .sort((a, b) =>
+                a.firstname.toLowerCase() > b.firstname.toLowerCase() ? 1 : -1
               )
+              .filter(
+                (employee) =>
+                  employee.firstname.toLowerCase().includes(search) ||
+                  employee.firstname.toUpperCase().includes(search) ||
+                  employee.firstname.includes(search)
+              )
+              .slice(pagesVisited, pagesVisited + usersPerPage)
               .map((employee) => (
                 <tr key={employee.id}>
                   <td>{employee.firstname}</td>
@@ -87,6 +103,17 @@ function Offboarding() {
               ))}
           </tbody>
         </table>
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={Math.ceil(offboarding.length / usersPerPage)}
+          onPageChange={changePage}
+          containerClassName={"paginationBttns"}
+          previousLinkClassName={"previousBttn"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
+        />
         <button
           onClick={() => navigate("/home")}
           className="btn btn-success me-2"

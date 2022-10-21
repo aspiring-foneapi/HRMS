@@ -14,6 +14,7 @@ import Offboarding from "./components/Offboarding";
 import Onboard from "./components/Onboard";
 import Timeoff from "./components/Timeoff";
 import SendInvitation from "./components/SendInvitation";
+import SendWelcomeMail from "./components/SendWelcomeMail";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -57,6 +58,16 @@ function App() {
               element={
                 userData && userData._id && userData.role === "admin" ? (
                   <SendInvitation />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/sendwelcomemail/:id"
+              element={
+                userData && userData._id && userData.role === "admin" ? (
+                  <SendWelcomeMail />
                 ) : (
                   <Login />
                 )

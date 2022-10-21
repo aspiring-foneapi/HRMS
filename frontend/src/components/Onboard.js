@@ -43,9 +43,9 @@ function Onboard() {
         .post("http://localhost:3001/register", updateApplicant)
         .then((res) => alert(res.data.message))
         .then(
-          axios
-            .delete(`http://localhost:3001/applicants/${updateApplicant._id}`)
-            .then(() => console.log("Successfully deleted"))
+          axios.delete(
+            `https://hrms-api.onrender.com/applicants/${updateApplicant._id}`
+          )
         );
       console.log("successfully deleted");
       navigate("/home");

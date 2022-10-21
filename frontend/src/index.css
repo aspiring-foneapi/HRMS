@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.paginationBttns {
+  width: 80%;
+  height: 40;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationBttns a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid green;
+  color: green;
+  cursor: pointer;
+}
+.paginationBttns a:hover {
+  color: white;
+  background-color: green;
+}
+
+.paginationActive a {
+  color: white;
+  background-color: green;
+}

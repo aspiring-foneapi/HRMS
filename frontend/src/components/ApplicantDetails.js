@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
 
 function ApplicantDetails() {
   const [applicants, setApplicants] = useState([]);
   const [search, setSearch] = useState("");
+  const [searchStage, setSearchStage] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
 
   const navigate = useNavigate();
 
@@ -22,6 +25,13 @@ function ApplicantDetails() {
         console.log(err);
       });
   }, []);
+
+  const usersPerPage = 8;
+  const pagesVisited = pageNumber * usersPerPage;
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
   return (
     <React.Fragment>
@@ -51,6 +61,19 @@ function ApplicantDetails() {
         <div>
           <div className="container">
             <h2 className="text-center">Applicants</h2>
+            <form className="d-flex">
+              <h5>Select stage: </h5>
+              <select
+                className="me-2"
+                value={searchStage}
+                onChange={(e) => setSearchStage(e.target.value)}
+              >
+                <option> </option>
+                <option>new hire</option>
+                <option>onboarding initiated</option>
+                <option>onboarding completed</option>
+              </select>
+            </form>
             <table className="table table-bordered table-striped">
               <thead>
                 <th>First Name</th>
@@ -61,9 +84,24 @@ function ApplicantDetails() {
               </thead>
               <tbody>
                 {applicants
-                  .filter((employee) =>
-                    employee.firstname.toLowerCase().includes(search)
+                  .sort((a, b) =>
+                    a.firstname.toLowerCase() > b.firstname.toLowerCase()
+                      ? 1
+                      : -1
                   )
+                  .filter(
+                    (applicant) =>
+                      applicant.firstname.includes(search) ||
+                      applicant.firstname.toLowerCase().includes(search) ||
+                      applicant.firstname.toUpperCase().includes(search)
+                  )
+                  .filter(
+                    (applicant) =>
+                      applicant.stage.includes(searchStage) ||
+                      applicant.stage.toLowerCase().includes(searchStage) ||
+                      applicant.stage.toLowerCase().includes(searchStage)
+                  )
+                  .slice(pagesVisited, pagesVisited + usersPerPage)
                   .map((applicant) => (
                     <tr key={applicant._id}>
                       <td>
@@ -79,6 +117,17 @@ function ApplicantDetails() {
                       <td>{applicant.stage}</td>
                       <td>{applicant._id}</td>
                       <td>
+                        <button
+                          onClick={() =>
+                            navigate(`/sendwelcomemail/${applicant._id}`)
+                          }
+                          id={applicant._id}
+                          className="btn btn-success me-2"
+                        >
+                          Send Invitation mail
+                        </button>
+                      </td>
+                      <td>
                         {" "}
                         <button
                           onClick={() =>
@@ -93,6 +142,17 @@ function ApplicantDetails() {
                   ))}
               </tbody>
             </table>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              pageCount={Math.ceil(applicants.length / usersPerPage)}
+              onPageChange={changePage}
+              containerClassName={"paginationBttns"}
+              previousLinkClassName={"previousBttn"}
+              nextLinkClassName={"nextBttn"}
+              disabledClassName={"paginationDisabled"}
+              activeClassName={"paginationActive"}
+            />
             <footer>
               <button
                 onClick={() => navigate("/home")}
