@@ -41,11 +41,9 @@ function Onboard() {
         .post("https://hrms-api.onrender.com/register", updateApplicant)
         .then((res) => alert(res.data.message))
         .then(
-          axios
-            .delete(
-              `https://hrms-api.onrender.com/applicants/${updateApplicant._id}`
-            )
-            .then(() => console.log("Successfully deleted"))
+          axios.delete(
+            `https://hrms-api.onrender.com/applicants/${updateApplicant._id}`
+          )
         );
       navigate("/home");
     } else {
