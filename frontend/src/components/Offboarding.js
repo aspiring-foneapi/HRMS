@@ -6,7 +6,7 @@ import Home from "./Home";
 
 function Offboarding() {
   const { id } = useParams();
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
   const [pageNumber, setPageNumber] = useState(0);

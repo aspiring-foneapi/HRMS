@@ -6,7 +6,7 @@ import ReactPaginate from "react-paginate";
 import Home from "./Home";
 
 function ApplicantDetails() {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const [applicants, setApplicants] = useState([]);
   const [search, setSearch] = useState("");
   const [searchStage, setSearchStage] = useState("");

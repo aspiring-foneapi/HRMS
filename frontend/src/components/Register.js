@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import Home from "./Home";
 
 export const Register = () => {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const [value, setValue] = useState({
     firstname: "",
     lastname: "",

@@ -5,7 +5,7 @@ import axios from "axios";
 import Home from "./Home";
 
 function SendWelcomeMail() {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const [applicant, setApplicant] = useState([]);
   const { id } = useParams();

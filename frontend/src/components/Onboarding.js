@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import Home from "./Home";
 
 function Onboarding() {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const [value, setValue] = useState({
     firstname: "",

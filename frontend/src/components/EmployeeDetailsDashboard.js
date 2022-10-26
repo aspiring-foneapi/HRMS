@@ -7,7 +7,7 @@ import ReactPaginate from "react-paginate";
 import EmployeeDashboard from "./EmployeeDashboard";
 
 function EmployeeDetailsDashboard() {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const { id } = useParams();
   console.log(id);
   const [employees, setEmployees] = useState([]);

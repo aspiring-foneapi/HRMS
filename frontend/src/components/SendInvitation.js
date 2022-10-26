@@ -5,7 +5,7 @@ import axios from "axios";
 import Home from "./Home";
 
 function SendInvitation() {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const [employee, setEmployee] = useState([]);
   const { id } = useParams();
