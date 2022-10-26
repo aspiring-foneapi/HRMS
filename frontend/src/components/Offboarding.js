@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
+import Home from "./Home";
 
 function Offboarding() {
+  const { id } = useParams();
+  const APIrenderer = "https://hrms-api.onrender.com";
   const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
@@ -12,7 +15,7 @@ function Offboarding() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/offboarding-employees")
+      .get(`${APIrenderer}/offboarding-employees`)
       .then((res) => {
         console.log(res);
         setOffboarding(res.data.data);
@@ -26,9 +29,33 @@ function Offboarding() {
     console.log(id.target.id);
     const employeeId = id.target.id;
     await axios
-      .delete(`http://localhost:3001/offboarding-employees/${employeeId}`)
+      .delete(`${APIrenderer}/offboarding-employees/${employeeId}`)
       .then(() => alert("Offboarding completed"));
-    navigate("/home");
+    navigate("/dashboard");
+  };
+
+  const handleUndo = async (id) => {
+    const employeeId = id.target.id;
+    console.log(employeeId);
+    await axios
+      .get(`${APIrenderer}/offboarding-employees/${employeeId}`)
+      .then((res) => {
+        console.log(res.data);
+        setOffboarding(res.data);
+        console.log(offboarding);
+        const firstname = res.data.firstname;
+        const lastname = res.data.lastname;
+        const email = res.data.email;
+        const role = res.data.role;
+        const password = res.data.password;
+        const id = res.data._id;
+        console.log(firstname, lastname, email, role, password);
+        const data = { firstname, lastname, email, role, password };
+        console.log(id);
+        axios.post(`${APIrenderer}/register`, data);
+        axios.delete(`${APIrenderer}/offboarding-employees/${id}`);
+        navigate("/dashboard");
+      });
   };
 
   const usersPerPage = 8;
@@ -38,90 +65,77 @@ function Offboarding() {
   };
 
   return (
-    <div>
-      <nav className="navbar navbar-light bg-light">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to={"/home"}>
-            ASG Platform Talent Center
-          </Link>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              placeholder="Search..."
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button
-              className="btn btn-outline-success me-2"
-              onClick={() => navigate("/")}
-            >
-              Logout
-            </button>
-          </form>
+    <Home>
+      <div>
+        <div>
+          <h2 className="text-center">Offboarding Employees</h2>
+          <table className="table table-bordered table-striped">
+            <thead>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </thead>
+            <tbody>
+              {offboarding
+                .sort((a, b) =>
+                  a.firstname.toLowerCase() > b.firstname.toLowerCase() ? 1 : -1
+                )
+                .filter(
+                  (employee) =>
+                    employee.firstname.toLowerCase().includes(search) ||
+                    employee.firstname.toUpperCase().includes(search) ||
+                    employee.firstname.includes(search)
+                )
+                .slice(pagesVisited, pagesVisited + usersPerPage)
+                .map((employee) => (
+                  <tr key={employee.id}>
+                    <td>{employee.firstname}</td>
+                    <td>{employee.lastname}</td>
+                    <td>{employee.email}</td>
+                    <td>{employee.role}</td>
+                    <td>
+                      <button
+                        onClick={handleComplete}
+                        id={employee._id}
+                        className="btn btn-success me-2"
+                      >
+                        Offboard Completed
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        onClick={handleUndo}
+                        id={employee._id}
+                        className="btn btn-success me-2"
+                      >
+                        Back to Onboard
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <ReactPaginate
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            pageCount={Math.ceil(offboarding.length / usersPerPage)}
+            onPageChange={changePage}
+            containerClassName={"paginationBttns"}
+            previousLinkClassName={"previousBttn"}
+            nextLinkClassName={"nextBttn"}
+            disabledClassName={"paginationDisabled"}
+            activeClassName={"paginationActive"}
+          />
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="btn btn-success me-2"
+          >
+            Home
+          </button>
         </div>
-      </nav>
-      <div className="container">
-        <h2 className="text-center">Offboarding Employees</h2>
-        <table className="table table-bordered table-striped">
-          <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>ID</th>
-            <th>Role</th>
-            <th>Password</th>
-          </thead>
-          <tbody>
-            {offboarding
-              .sort((a, b) =>
-                a.firstname.toLowerCase() > b.firstname.toLowerCase() ? 1 : -1
-              )
-              .filter(
-                (employee) =>
-                  employee.firstname.toLowerCase().includes(search) ||
-                  employee.firstname.toUpperCase().includes(search) ||
-                  employee.firstname.includes(search)
-              )
-              .slice(pagesVisited, pagesVisited + usersPerPage)
-              .map((employee) => (
-                <tr key={employee.id}>
-                  <td>{employee.firstname}</td>
-                  <td>{employee.lastname}</td>
-                  <td>{employee.email}</td>
-                  <td>{employee._id}</td>
-                  <td>{employee.role}</td>
-                  <td>{employee.password}</td>
-                  <td>
-                    <button
-                      onClick={handleComplete}
-                      id={employee._id}
-                      className="btn btn-success me-2"
-                    >
-                      Offboard Completed
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          pageCount={Math.ceil(offboarding.length / usersPerPage)}
-          onPageChange={changePage}
-          containerClassName={"paginationBttns"}
-          previousLinkClassName={"previousBttn"}
-          nextLinkClassName={"nextBttn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"paginationActive"}
-        />
-        <button
-          onClick={() => navigate("/home")}
-          className="btn btn-success me-2"
-        >
-          Home
-        </button>
       </div>
-    </div>
+    </Home>
   );
 }
 

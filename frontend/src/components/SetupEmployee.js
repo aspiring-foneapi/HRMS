@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Container } from "react-bootstrap";
-import Home from "./Home";
 
-function Onboard() {
+function SetupEmployee() {
   const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [updateApplicant, setUpdateApplicant] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    role: "",
-    password: "",
-  });
+  const [updateEmployee, setUpdateEmployee] = useState("");
 
   useEffect(() => {
+    console.log("useeffect part");
     axios
-      .get(`${APIrenderer}/applicants/${id}`)
+      .get(`${APIrenderer}/users/${id}`)
       .then((res) => {
         console.log("First", res.data);
-        setUpdateApplicant(res.data);
+        setUpdateEmployee(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -32,39 +26,56 @@ function Onboard() {
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    setUpdateApplicant((prev) => {
+    setUpdateEmployee((prev) => {
       return { ...prev, [name]: value };
     });
   };
 
   const handleSubmit = async () => {
-    console.log(updateApplicant);
-    const { firstname, lastname, email, password } = updateApplicant;
-    if (firstname && lastname && email && password) {
-      await axios
-        .post(`${APIrenderer}/register`, updateApplicant)
-        .then((res) => alert(res.data.message))
-        .then(axios.delete(`${APIrenderer}/applicants/${updateApplicant._id}`));
-      console.log("successfully deleted");
-      navigate("/dashboard");
-    } else {
-      alert("Fill up all the Required fields");
-      navigate(`/applicants/onboard/${id}`);
-    }
+    console.log("Submit button clicked", updateEmployee);
+    await axios
+      .put(`${APIrenderer}/users/${id}`, updateEmployee)
+      .then((res) => alert("Applicant is Updated", res));
+    navigate("/employees");
+  };
+
+  const handleDelete = async () => {
+    await axios
+      .delete(`${APIrenderer}/users/${id}`)
+      .then(navigate("/employees"), () => console.log("Successfully deleted"));
   };
 
   return (
     <React.Fragment>
-      <Home>
-        <Container>
-          <div>
-            <div className="Register-account">
+      <Container>
+        <div>
+          <header>
+            <nav className="navbar navbar-light bg-light">
+              <div className="container-fluid">
+                <Link className="navbar-brand" to={""}>
+                  ASG Platform Talent Center
+                </Link>
+
+                <button
+                  className="btn btn-outline-success me-2"
+                  onClick={() => navigate("/")}
+                >
+                  Logout
+                </button>
+              </div>
+            </nav>
+          </header>
+          <main>
+            <div className="Register-account p-20vh">
               <form onSubmit={handleChange}>
-                <h4>Register New Applicant</h4>
+                <h4>
+                  Employee, {updateEmployee.firstname} {updateEmployee.lastname}
+                </h4>
+                <p>{updateEmployee.role}</p>
                 <div className="mb-3">
                   <label>First Name</label>
                   <input
-                    value={updateApplicant.firstname}
+                    value={updateEmployee.firstname}
                     type="text"
                     placeholder="First name"
                     className="form-control"
@@ -75,7 +86,7 @@ function Onboard() {
                 <div className="mb-3">
                   <label>Last Name</label>
                   <input
-                    value={updateApplicant.lastname}
+                    value={updateEmployee.lastname}
                     type="text"
                     className="form-control"
                     placeholder="Last name"
@@ -86,7 +97,7 @@ function Onboard() {
                 <div className="mb-3">
                   <label>Email</label>
                   <input
-                    value={updateApplicant.email}
+                    value={updateEmployee.email}
                     type="text"
                     className="form-control"
                     placeholder="Email"
@@ -97,29 +108,34 @@ function Onboard() {
                 <div className="mb-3">
                   <label>Password</label>
                   <input
+                    value={updateEmployee.password}
                     type="password"
                     className="form-control"
-                    placeholder="Password"
-                    name="password"
+                    placeholder="Last name"
+                    name="lastname"
                     onChange={handleChange}
                   />
                 </div>
+                <div className="mb-3">
+                  <label>Date of Joining</label>
+                  <p>{updateEmployee.joindate}</p>
+                </div>
                 <button onClick={handleSubmit} className="btn btn-primary">
-                  Onboard
+                  Submit
                 </button>{" "}
                 <button
-                  onClick={() => navigate("/applicants")}
+                  onClick={() => navigate("/employees")}
                   className="btn btn-primary"
                 >
                   Cancel
                 </button>
               </form>
             </div>
-          </div>
-        </Container>
-      </Home>
+          </main>
+        </div>
+      </Container>
     </React.Fragment>
   );
 }
 
-export default Onboard;
+export default SetupEmployee;

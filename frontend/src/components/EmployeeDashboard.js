@@ -1,23 +1,35 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./Home.css";
-import "bootstrap/dist/css/bootstrap.css";
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
-function Home(props) {
+function EmployeeDashboard(props) {
+  const APIrenderer = "https://hrms-api.onrender.com";
+  const { id } = useParams();
+  console.log(id);
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${APIrenderer}/users/${id}`)
+      .then((res) => {
+        console.log("First", res.data);
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <React.Fragment>
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to={"/dashboard"}>
+          <Link className="navbar-brand" to={`/userdashboard/${id}`}>
             ASG Platform Talent Center
           </Link>
           <form className="d-flex">
-            <Link to={"/register"}>
-              <button className="btn btn-outline-success me-2">Register</button>
-            </Link>
             <button
               className="btn btn-outline-success me-2"
               onClick={() => navigate("/")}
@@ -33,41 +45,19 @@ function Home(props) {
             <div className="position-sticky">
               <div className="list-group list-group-flush mx-3 mt-4">
                 <Link
-                  to={"/dashboard"}
+                  to={`/userdashboard/${id}`}
                   className="list-group-item list-group-item-action py-2 ripple"
                   aria-current="true"
                 >
                   <i className="fas fa-tachometer-alt fa-fw me-3"></i>
                   <span>Dashboard</span>
                 </Link>
-
                 <Link
-                  to={"/employees"}
+                  to={`/employeedetails/${id}`}
                   className="list-group-item list-group-item-action py-2 ripple"
                 >
                   <i className="fas fa-lock fa-fw me-3"></i>
                   <span>Employees</span>
-                </Link>
-                <Link
-                  to={"/applicants"}
-                  className="list-group-item list-group-item-action py-2 ripple"
-                >
-                  <i className="fas fa-chart-line fa-fw me-3"></i>
-                  <span>Applicants</span>
-                </Link>
-                <Link
-                  to={"/onboarding"}
-                  className="list-group-item list-group-item-action py-2 ripple"
-                >
-                  <i className="fas fa-chart-line fa-fw me-3"></i>
-                  <span>Onboarding</span>
-                </Link>
-                <Link
-                  to={"/offboarding-employees"}
-                  className="list-group-item list-group-item-action py-2 ripple"
-                >
-                  <i className="fas fa-chart-line fa-fw me-3"></i>
-                  <span>Offboarding</span>
                 </Link>
               </div>
             </div>
@@ -81,4 +71,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default EmployeeDashboard;

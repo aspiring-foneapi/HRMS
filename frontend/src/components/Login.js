@@ -5,6 +5,7 @@ import "./Login.css";
 import data from "../ContextApi";
 
 function Login() {
+  const APIrenderer = "https://hrms-api.onrender.com";
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -22,10 +23,15 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3001/login", user).then((res) => {
+    axios.post(`${APIrenderer}/login`, user).then((res) => {
       alert(res.data.message);
+      console.log(res.data.user);
       setUserData(res.data.user);
-      navigate("/home");
+      if (res.data.user.role === "Admin") {
+        navigate("/dashboard");
+      } else {
+        navigate(`/userdashboard/${res.data.user._id}`);
+      }
     });
   };
 

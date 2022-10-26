@@ -4,6 +4,7 @@ import axios from "axios";
 import { Container } from "react-bootstrap";
 
 function Timeoff() {
+  const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -16,7 +17,7 @@ function Timeoff() {
   useEffect(() => {
     console.log("useeffect part");
     axios
-      .get(`http://localhost:3001/users/${id}`)
+      .get(`${APIrenderer}/users/${id}`)
       .then((res) => {
         console.log("First", res.data);
         setUpdateEmployee(res.data);
@@ -37,7 +38,7 @@ function Timeoff() {
   const handleTimeOffSubmit = async () => {
     console.log("Submit button clicked", updateEmployee);
     await axios
-      .put(`http://localhost:3001/users/${id}`, updateEmployee)
+      .put(`${APIrenderer}/users/${id}`, updateEmployee)
       .then((res) => alert("Applicant is Updated", res));
     navigate(`/employees/${id}`);
   };
@@ -45,7 +46,7 @@ function Timeoff() {
   const handleLeaveSubmit = async () => {
     console.log("Submit button clicked", updateEmployee);
     await axios
-      .put(`http://localhost:3001/users/${id}`, updateEmployee)
+      .put(`${APIrenderer}/users/${id}`, updateEmployee)
       .then((res) => alert("Applicant is Updated", res));
     navigate(`/employees/${id}`);
   };

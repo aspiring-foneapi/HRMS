@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Container } from "react-bootstrap";
-import Home from "./Home";
+import EmployeeDashboard from "./EmployeeDashboard";
 
-function Employee() {
+function EditInformation() {
   const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const { id } = useParams();
@@ -48,7 +48,7 @@ function Employee() {
 
   return (
     <React.Fragment>
-      <Home>
+      <EmployeeDashboard>
         <Container>
           <div>
             <div className="Register-account p-20vh">
@@ -83,7 +83,7 @@ function Employee() {
                   <label>Password</label>
                   <input
                     value={updateEmployee.password}
-                    type="password"
+                    type="text"
                     className="form-control"
                     placeholder="Last name"
                     name="lastname"
@@ -100,34 +100,6 @@ function Employee() {
                     name="email"
                     onChange={handleChange}
                   />
-                </div>
-                <div className="mb-3">
-                  <label>ID</label>
-                  <input
-                    value={updateEmployee._id}
-                    type="text"
-                    className="form-control"
-                    placeholder="Email"
-                    name="email"
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label>Role</label>
-                  <select
-                    value={updateEmployee.role}
-                    type="text"
-                    className="form-control"
-                    placeholder="Role"
-                    name="role"
-                    onChange={handleChange}
-                  >
-                    <option>Admin</option>
-                    <option>Employee</option>
-                    <option>Manager</option>
-                    <option>Human Resources</option>
-                    <option>Finance</option>
-                  </select>
                 </div>
                 <div className="mb-3">
                   <label>Date of Joining</label>
@@ -215,11 +187,8 @@ function Employee() {
                 <button onClick={handleSubmit} className="btn btn-primary">
                   Update
                 </button>{" "}
-                <button onClick={handleDelete} className="btn btn-primary">
-                  Delete
-                </button>{" "}
                 <button
-                  onClick={() => navigate("/employees")}
+                  onClick={() => navigate(`/userdashboard/${id}`)}
                   className="btn btn-primary"
                 >
                   Cancel
@@ -228,9 +197,9 @@ function Employee() {
             </div>
           </div>
         </Container>
-      </Home>
+      </EmployeeDashboard>
     </React.Fragment>
   );
 }
 
-export default Employee;
+export default EditInformation;

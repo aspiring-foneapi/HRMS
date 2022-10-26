@@ -73,7 +73,7 @@ app.post("/login", bodyParser.urlencoded({ extended: false }), (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
   EmployeeDetailsModel.findOne(
-    { email: email, role: (role = "admin") },
+    { email: email, role: (role = ["Admin", "Employee"]) },
     (err, user) => {
       if (user) {
         if (password === user.password) {
@@ -84,7 +84,7 @@ app.post("/login", bodyParser.urlencoded({ extended: false }), (req, res) => {
           res.send({ message: "Password incorrect" });
         }
       } else {
-        res.send({ message: "This email is not registered as admin" });
+        res.send({ message: "This email is not registered" });
       }
     }
   );
