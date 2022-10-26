@@ -146,20 +146,9 @@ function App() {
                 )
               }
             />
-            <Route
-              path="/editinformation/:id"
-              element={
-                userData && userData._id ? <EditInformation /> : <Login />
-              }
-            />
-            <Route
-              path="/setupemployee/:id"
-              element={userData && userData._id ? <SetupEmployee /> : <Login />}
-            />
-            <Route
-              path="/setuponboard/:id"
-              element={userData && userData._id ? <SetupOnboard /> : <Login />}
-            />
+            <Route path="/editinformation/:id" element={<EditInformation />} />
+            <Route path="/setupemployee/:id" element={<SetupEmployee />} />
+            <Route path="/setuponboard/:id" element={<SetupOnboard />} />
           </Routes>
         </Router>
       </data.Provider>
