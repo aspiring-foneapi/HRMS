@@ -1,47 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Home.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-function Home() {
+function Home(props) {
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
   return (
-    <div>
-      <header>
-        <nav className="navbar navbar-light bg-light">
-          <div className="container-fluid">
-            <Link className="navbar-brand" to={"/home"}>
-              ASG Platform Talent Center
+    <React.Fragment>
+      <nav className="navbar navbar-light bg-light">
+        <div className="container-fluid">
+          <Link className="navbar-brand" to={"/dashboard"}>
+            ASG Platform Talent Center
+          </Link>
+          <form className="d-flex">
+            <input
+              className="form-control me-2"
+              placeholder="Search..."
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <Link to={"/register"}>
+              <button className="btn btn-outline-success me-2">Register</button>
             </Link>
-            <form className="d-flex">
-              <Link to={"/register"}>
-                <button className="btn btn-outline-success me-2">
-                  Register
-                </button>
-              </Link>
-              <button
-                className="btn btn-outline-success me-2"
-                onClick={() => navigate("/")}
-              >
-                Logout
-              </button>
-            </form>
-          </div>
-        </nav>
-      </header>
-      <main>
-        <div className="page-content-wrapper">
-          <nav id="sidebarMenu" className=" d-lg-block sidebar ">
+            <button
+              className="btn btn-outline-success me-2"
+              onClick={() => navigate("/")}
+            >
+              Logout
+            </button>
+          </form>
+        </div>
+      </nav>
+      <div className="container">
+        <div className="sidebar">
+          <div className="page-content-wrapper">
             <div className="position-sticky">
               <div className="list-group list-group-flush mx-3 mt-4">
                 <Link
-                  to={"/home"}
+                  to={"/dashboard"}
                   className="list-group-item list-group-item-action py-2 ripple"
                   aria-current="true"
                 >
                   <i className="fas fa-tachometer-alt fa-fw me-3"></i>
-                  <span>Main dashboard</span>
+                  <span>Dashboard</span>
                 </Link>
 
                 <Link
@@ -74,10 +76,13 @@ function Home() {
                 </Link>
               </div>
             </div>
-          </nav>
+          </div>
         </div>
-      </main>
-    </div>
+        <main>
+          <p>{props.children}</p>
+        </main>
+      </div>
+    </React.Fragment>
   );
 }
 

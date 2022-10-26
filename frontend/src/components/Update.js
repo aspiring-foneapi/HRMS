@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Container } from "react-bootstrap";
+import Home from "./Home";
 
 function Update() {
+  const APIrenderer = "http://localhost:3001";
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -17,7 +19,7 @@ function Update() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/applicants/${id}`)
+      .get(`${APIrenderer}/applicants/${id}`)
       .then((res) => {
         console.log("First", res.data);
         setUpdateApplicant(res.data);
@@ -40,7 +42,7 @@ function Update() {
     const { firstname, lastname, email, stage } = updateApplicant;
     if (firstname && lastname && email && stage) {
       await axios
-        .put(`http://localhost:3001/applicants/${id}`, updateApplicant)
+        .put(`${APIrenderer}/applicants/${id}`, updateApplicant)
         .then((res) => alert("Applicant is Updated", res));
       navigate("/applicants");
     } else {
@@ -51,96 +53,81 @@ function Update() {
 
   return (
     <React.Fragment>
-      <header>
-        <nav className="navbar navbar-light bg-light">
-          <div className="container-fluid">
-            <Link className="navbar-brand" to={"/home"}>
-              ASG Platform Talent Center
-            </Link>
-            <form className="d-flex">
+      <Home>
+        <Container>
+          <div className="Register-account">
+            <form onSubmit={handleChange}>
+              <h4>Register New Applicant</h4>
+              <div className="mb-3">
+                <label>First Name</label>
+                <input
+                  value={updateApplicant.firstname}
+                  type="text"
+                  placeholder="First name"
+                  className="form-control"
+                  name="firstname"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Last Name</label>
+                <input
+                  value={updateApplicant.lastname}
+                  type="text"
+                  className="form-control"
+                  placeholder="Last name"
+                  name="lastname"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Email</label>
+                <input
+                  value={updateApplicant.email}
+                  type="text"
+                  className="form-control"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>Stage</label>
+                <select
+                  type="text"
+                  className="form-control"
+                  placeholder="Email"
+                  name="stage"
+                  onChange={handleChange}
+                >
+                  <option> </option>
+                  <option>new hire</option>
+                  <option>onboarding initiated</option>
+                  <option>onboarding completed</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label>Join Date</label>
+                <input
+                  value={updateApplicant.joindate}
+                  className="form-control"
+                  placeholder="Join Date"
+                  name="joindate"
+                />
+              </div>
+              <button onClick={handleSubmit} className="btn btn-primary">
+                Update
+              </button>{" "}
               <button
-                className="btn btn-outline-success me-2"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/applicants")}
+                className="btn btn-primary"
               >
-                Logout
+                Cancel
               </button>
             </form>
           </div>
-        </nav>
-      </header>
-      <Container>
-        <div className="Register-account">
-          <form onSubmit={handleChange}>
-            <h4>Register New Applicant</h4>
-            <div className="mb-3">
-              <label>First Name</label>
-              <input
-                value={updateApplicant.firstname}
-                type="text"
-                placeholder="First name"
-                className="form-control"
-                name="firstname"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label>Last Name</label>
-              <input
-                value={updateApplicant.lastname}
-                type="text"
-                className="form-control"
-                placeholder="Last name"
-                name="lastname"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label>Email</label>
-              <input
-                value={updateApplicant.email}
-                type="text"
-                className="form-control"
-                placeholder="Email"
-                name="email"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="mb-3">
-              <label>Stage</label>
-              <select
-                type="text"
-                className="form-control"
-                placeholder="Email"
-                name="stage"
-                onChange={handleChange}
-              >
-                <option> </option>
-                <option>new hire</option>
-                <option>onboarding initiated</option>
-                <option>onboarding completed</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label>Join Date</label>
-              <input
-                value={updateApplicant.joindate}
-                className="form-control"
-                placeholder="Join Date"
-                name="joindate"
-              />
-            </div>
-            <button onClick={handleSubmit} className="btn btn-primary">
-              Update
-            </button>{" "}
-            <button
-              onClick={() => navigate("/applicants")}
-              className="btn btn-primary"
-            >
-              Cancel
-            </button>
-          </form>
-        </div>
-      </Container>
+        </Container>
+      </Home>
     </React.Fragment>
   );
 }

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./EmployeeDetails.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
-import Home from "./Home";
+import EmployeeDashboard from "./EmployeeDashboard";
 
-function EmployeeDetails(user) {
+function EmployeeDetailsDashboard() {
   const APIrenderer = "http://localhost:3001";
+  const { id } = useParams();
+  console.log(id);
   const [employees, setEmployees] = useState([]);
-  const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
   const [searchRole, setSearchRole] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
@@ -30,37 +31,6 @@ function EmployeeDetails(user) {
       });
   }, []);
 
-  // const handleDelete = async (id) => {
-  //   console.log(id.target.id);
-  //   const deleteId = id.target.id;
-  //   await axios
-  //     .delete(`https://hrms-api.onrender.com/users/${deleteId}`)
-  //     .then(navigate("/employees"), () => console.log("Successfully deleted"));
-  // };
-
-  const handleOffboard = async (id) => {
-    console.log("Offboarding");
-    const employeeId = id.target.id;
-    console.log(employeeId);
-    await axios.get(`${APIrenderer}/users/${employeeId}`).then((res) => {
-      console.log(res.data);
-      setOffboarding(res.data);
-      console.log(offboarding);
-      const firstname = res.data.firstname;
-      const lastname = res.data.lastname;
-      const email = res.data.email;
-      const role = res.data.role;
-      const password = res.data.password;
-      const id = res.data._id;
-      console.log(firstname, lastname, email, role, password);
-      const data = { firstname, lastname, email, role, password };
-      console.log(id);
-      axios.post(`${APIrenderer}/offboarding`, data);
-      axios.delete(`${APIrenderer}/users/${id}`);
-      navigate("/dashboard");
-    });
-  };
-
   const usersPerPage = 8;
   const pagesVisited = pageNumber * usersPerPage;
 
@@ -70,7 +40,7 @@ function EmployeeDetails(user) {
 
   return (
     <React.Fragment>
-      <Home>
+      <EmployeeDashboard>
         <Container>
           <div>
             <form className="d-flex">
@@ -100,7 +70,6 @@ function EmployeeDetails(user) {
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Role</th>
-                  <th>ID</th>
                 </thead>
                 <tbody>
                   {employees
@@ -122,39 +91,10 @@ function EmployeeDetails(user) {
                     .slice(pagesVisited, pagesVisited + usersPerPage)
                     .map((employee) => (
                       <tr key={employee._id}>
-                        <td>
-                          <Link
-                            className="list-group-item list-group-item-action py-2 ripple"
-                            aria-current="true"
-                            to={`/employees/${employee._id}`}
-                          >
-                            {employee.firstname}
-                          </Link>
-                        </td>
+                        <td>{employee.firstname}</td>
                         <td>{employee.lastname}</td>
                         <td>{employee.email}</td>
                         <td>{employee.role}</td>
-                        <td>{employee._id}</td>
-                        <td>
-                          <button
-                            onClick={handleOffboard}
-                            id={employee._id}
-                            className="btn btn-success me-2"
-                          >
-                            Offboard
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            onClick={() =>
-                              navigate(`/sendinvite/${employee._id}`)
-                            }
-                            id={employee._id}
-                            className="btn btn-success me-2"
-                          >
-                            Send Invitation mail
-                          </button>
-                        </td>
                       </tr>
                     ))}
                 </tbody>
@@ -171,7 +111,7 @@ function EmployeeDetails(user) {
                 activeClassName={"paginationActive"}
               />
               <button
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate(`/userdashboard/${id}`)}
                 className="btn btn-primary"
               >
                 Home
@@ -179,9 +119,9 @@ function EmployeeDetails(user) {
             </div>
           </div>
         </Container>
-      </Home>
+      </EmployeeDashboard>
     </React.Fragment>
   );
 }
 
-export default EmployeeDetails;
+export default EmployeeDetailsDashboard;
