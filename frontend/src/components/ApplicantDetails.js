@@ -121,7 +121,7 @@ function ApplicantDetails() {
                             }
                             className="btn btn-success me-2"
                           >
-                            Onboard
+                            Add as Employee
                           </button>
                         </td>
                       </tr>

@@ -16,10 +16,11 @@ import Timeoff from "./components/Timeoff";
 import SendInvitation from "./components/SendInvitation";
 import SendWelcomeMail from "./components/SendWelcomeMail";
 import Dashboard from "./components/Dashboard";
-import EmployeeDashboard from "./components/EmployeeDashboard";
 import EmployeeDetailsDashboard from "./components/EmployeeDetailsDashboard";
 import UserDashboard from "./components/UserDashboard";
 import EditInformation from "./components/EditInformation";
+import SetupEmployee from "./components/SetupEmployee";
+import SetupOnboard from "./components/SetupOnboard";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -146,6 +147,8 @@ function App() {
               }
             />
             <Route path="/editinformation/:id" element={<EditInformation />} />
+            <Route path="/setupemployee/:id" element={<SetupEmployee />} />
+            <Route path="/setuponboard/:id" element={<SetupOnboard />} />
           </Routes>
         </Router>
       </data.Provider>

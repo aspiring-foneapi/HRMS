@@ -57,7 +57,7 @@ function Update() {
         <Container>
           <div className="Register-account">
             <form onSubmit={handleChange}>
-              <h4>Register New Applicant</h4>
+              <h4>Update Applicant</h4>
               <div className="mb-3">
                 <label>First Name</label>
                 <input
@@ -88,6 +88,17 @@ function Update() {
                   className="form-control"
                   placeholder="Email"
                   name="email"
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label>ID</label>
+                <input
+                  value={updateApplicant._id}
+                  type="text"
+                  className="form-control"
+                  placeholder="ID"
+                  name="id"
                   onChange={handleChange}
                 />
               </div>

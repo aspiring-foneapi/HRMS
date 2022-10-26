@@ -100,7 +100,6 @@ function EmployeeDetails(user) {
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Role</th>
-                  <th>ID</th>
                 </thead>
                 <tbody>
                   {employees
@@ -134,7 +133,7 @@ function EmployeeDetails(user) {
                         <td>{employee.lastname}</td>
                         <td>{employee.email}</td>
                         <td>{employee.role}</td>
-                        <td>{employee._id}</td>
+
                         <td>
                           <button
                             onClick={handleOffboard}

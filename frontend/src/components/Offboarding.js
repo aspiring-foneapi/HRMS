@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Home from "./Home";
 
 function Offboarding() {
+  const { id } = useParams();
   const APIrenderer = "http://localhost:3001";
   const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
@@ -30,7 +31,7 @@ function Offboarding() {
     await axios
       .delete(`${APIrenderer}/offboarding-employees/${employeeId}`)
       .then(() => alert("Offboarding completed"));
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   const handleUndo = async (id) => {

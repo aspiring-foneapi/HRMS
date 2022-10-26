@@ -15,11 +15,6 @@ function Home(props) {
             ASG Platform Talent Center
           </Link>
           <form className="d-flex">
-            <input
-              className="form-control me-2"
-              placeholder="Search..."
-              onChange={(e) => setSearch(e.target.value)}
-            />
             <Link to={"/register"}>
               <button className="btn btn-outline-success me-2">Register</button>
             </Link>

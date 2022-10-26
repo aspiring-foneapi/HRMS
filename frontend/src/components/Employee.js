@@ -83,7 +83,7 @@ function Employee() {
                   <label>Password</label>
                   <input
                     value={updateEmployee.password}
-                    type="text"
+                    type="password"
                     className="form-control"
                     placeholder="Last name"
                     name="lastname"
@@ -94,6 +94,17 @@ function Employee() {
                   <label>Email</label>
                   <input
                     value={updateEmployee.email}
+                    type="text"
+                    className="form-control"
+                    placeholder="Email"
+                    name="email"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>ID</label>
+                  <input
+                    value={updateEmployee._id}
                     type="text"
                     className="form-control"
                     placeholder="Email"
