@@ -7,7 +7,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 // const { authPage } = require("./middlware");
 
