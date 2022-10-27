@@ -73,6 +73,13 @@ function EmployeeDetails(user) {
       <Home>
         <Container>
           <div>
+            <form className="d-flex">
+              <input
+                className="form-control me-2"
+                placeholder="Search..."
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </form>
             <div>
               <h2 className="text-center">Employees</h2>
               <table className="table table-bordered table-striped">
@@ -83,50 +90,54 @@ function EmployeeDetails(user) {
                   <th>Role</th>
                 </thead>
                 <tbody>
-                  {employees
-                    .sort((a, b) =>
-                      a.firstname.toLowerCase() > b.firstname.toLowerCase()
-                        ? 1
-                        : -1
-                    )
-                    .slice(pagesVisited, pagesVisited + usersPerPage)
-                    .map((employee) => (
-                      <tr key={employee._id}>
-                        <td>
-                          <Link
-                            className="list-group-item list-group-item-action py-2 ripple"
-                            aria-current="true"
-                            to={`/employees/${employee._id}`}
-                          >
-                            {employee.firstname}
-                          </Link>
-                        </td>
-                        <td>{employee.lastname}</td>
-                        <td>{employee.email}</td>
-                        <td>{employee.role}</td>
+                  {employees.length &&
+                    employees
+                      .sort((a, b) =>
+                        a.firstname.toLowerCase() > b.firstname.toLowerCase()
+                          ? 1
+                          : -1
+                      )
+                      .filter((employee) =>
+                        employee.firstname.toLowerCase().includes(search)
+                      )
+                      .slice(pagesVisited, pagesVisited + usersPerPage)
+                      .map((employee) => (
+                        <tr key={employee._id}>
+                          <td>
+                            <Link
+                              className="list-group-item list-group-item-action py-2 ripple"
+                              aria-current="true"
+                              to={`/employees/${employee._id}`}
+                            >
+                              {employee.firstname}
+                            </Link>
+                          </td>
+                          <td>{employee.lastname}</td>
+                          <td>{employee.email}</td>
+                          <td>{employee.role}</td>
 
-                        <td>
-                          <button
-                            onClick={handleOffboard}
-                            id={employee._id}
-                            className="btn btn-success me-2"
-                          >
-                            Offboard
-                          </button>
-                        </td>
-                        <td>
-                          <button
-                            onClick={() =>
-                              navigate(`/sendinvite/${employee._id}`)
-                            }
-                            id={employee._id}
-                            className="btn btn-success me-2"
-                          >
-                            Send Invitation mail
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                          <td>
+                            <button
+                              onClick={handleOffboard}
+                              id={employee._id}
+                              className="btn btn-success me-2"
+                            >
+                              Offboard
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                navigate(`/sendinvite/${employee._id}`)
+                              }
+                              id={employee._id}
+                              className="btn btn-success me-2"
+                            >
+                              Send Invitation mail
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                 </tbody>
               </table>
               <ReactPaginate
