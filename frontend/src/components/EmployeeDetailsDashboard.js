@@ -43,27 +43,8 @@ function EmployeeDetailsDashboard() {
       <EmployeeDashboard>
         <Container>
           <div>
-            <form className="d-flex">
-              <input
-                className="form-control me-2"
-                placeholder="Search..."
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </form>
             <div>
               <h2 className="text-center">Employees</h2>
-              <form className="d-flex">
-                <h5>sort by: </h5>
-                <select
-                  className="me-2"
-                  value={searchRole}
-                  onChange={(e) => setSearchRole(e.target.value)}
-                >
-                  <option> </option>
-                  <option>admin</option>
-                  <option>employee</option>
-                </select>
-              </form>
               <table className="table table-bordered table-striped">
                 <thead>
                   <th>First Name</th>
@@ -77,16 +58,6 @@ function EmployeeDetailsDashboard() {
                       a.firstname.toLowerCase() > b.firstname.toLowerCase()
                         ? 1
                         : -1
-                    )
-                    .filter(
-                      (employee) =>
-                        employee.firstname.toLowerCase().includes(search) ||
-                        employee.firstname.toUpperCase().includes(search)
-                    )
-                    .filter(
-                      (employee) =>
-                        employee.role.toLowerCase().includes(searchRole) ||
-                        employee.firstname.toUpperCase().includes(searchRole)
                     )
                     .slice(pagesVisited, pagesVisited + usersPerPage)
                     .map((employee) => (

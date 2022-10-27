@@ -134,10 +134,10 @@ function Employee() {
                   <p>{updateEmployee.joindate}</p>
                 </div>
                 <div className="mb-3">
-                  <label>Timeoff Remaining</label>
+                  <label>Timeoff/Leave Request</label>
                   <table className="table table-bordered table-striped">
                     <thead>
-                      <th>Number of Timeoff</th>
+                      <th>Approved/Pending</th>
                       <th>Time Off From</th>
                       <th>Time Off To</th>
                     </thead>
