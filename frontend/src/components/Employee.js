@@ -12,11 +12,9 @@ function Employee() {
   const [updateEmployee, setUpdateEmployee] = useState("");
 
   useEffect(() => {
-    console.log("useeffect part");
     axios
       .get(`${APIrenderer}/users/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateEmployee(res.data);
       })
       .catch((err) => {
@@ -33,7 +31,6 @@ function Employee() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateEmployee);
     await axios
       .put(`${APIrenderer}/users/${id}`, updateEmployee)
       .then((res) => alert("Applicant is Updated", res));

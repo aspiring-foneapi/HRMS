@@ -9,7 +9,7 @@ import EmployeeDashboard from "./EmployeeDashboard";
 function EmployeeDetailsDashboard() {
   const APIrenderer = "https://hrms-api.onrender.com";
   const { id } = useParams();
-  console.log(id);
+
   const [employees, setEmployees] = useState([]);
   const [search, setSearch] = useState("");
   const [searchRole, setSearchRole] = useState("");
@@ -21,10 +21,7 @@ function EmployeeDetailsDashboard() {
     axios
       .get(`${APIrenderer}/users`)
       .then((res) => {
-        console.log(res);
         setEmployees(res.data.data);
-        console.log(res.data.data);
-        console.log(res.data.data[0].firstname);
       })
       .catch((err) => {
         console.log(err);

@@ -21,7 +21,6 @@ function Update() {
     axios
       .get(`${APIrenderer}/applicants/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateApplicant(res.data);
       })
       .catch((err) => {
@@ -38,7 +37,6 @@ function Update() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateApplicant);
     const { firstname, lastname, email, stage } = updateApplicant;
     if (firstname && lastname && email && stage) {
       await axios

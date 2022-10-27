@@ -23,7 +23,6 @@ function Onboarding() {
   };
 
   const handleSubmit = async () => {
-    console.log(value);
     const { firstname, lastname, email, stage } = value;
     if (firstname && lastname && email && stage) {
       await axios

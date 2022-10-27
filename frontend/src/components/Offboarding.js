@@ -17,7 +17,6 @@ function Offboarding() {
     axios
       .get(`${APIrenderer}/offboarding-employees`)
       .then((res) => {
-        console.log(res);
         setOffboarding(res.data.data);
       })
       .catch((err) => {
@@ -26,7 +25,6 @@ function Offboarding() {
   }, []);
 
   const handleComplete = async (id) => {
-    console.log(id.target.id);
     const employeeId = id.target.id;
     await axios
       .delete(`${APIrenderer}/offboarding-employees/${employeeId}`)
@@ -36,22 +34,21 @@ function Offboarding() {
 
   const handleUndo = async (id) => {
     const employeeId = id.target.id;
-    console.log(employeeId);
+
     await axios
       .get(`${APIrenderer}/offboarding-employees/${employeeId}`)
       .then((res) => {
-        console.log(res.data);
         setOffboarding(res.data);
-        console.log(offboarding);
+
         const firstname = res.data.firstname;
         const lastname = res.data.lastname;
         const email = res.data.email;
         const role = res.data.role;
         const password = res.data.password;
         const id = res.data._id;
-        console.log(firstname, lastname, email, role, password);
+
         const data = { firstname, lastname, email, role, password };
-        console.log(id);
+
         axios.post(`${APIrenderer}/register`, data);
         axios.delete(`${APIrenderer}/offboarding-employees/${id}`);
         navigate("/dashboard");

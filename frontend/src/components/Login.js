@@ -25,7 +25,7 @@ function Login() {
     e.preventDefault();
     axios.post(`${APIrenderer}/login`, user).then((res) => {
       alert(res.data.message);
-      console.log(res.data.user);
+
       setUserData(res.data.user);
       if (res.data.user.role === "Admin") {
         navigate("/dashboard");

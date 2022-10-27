@@ -12,11 +12,9 @@ function EditInformation() {
   const [updateEmployee, setUpdateEmployee] = useState("");
 
   useEffect(() => {
-    console.log("useeffect part");
     axios
       .get(`${APIrenderer}/users/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateEmployee(res.data);
       })
       .catch((err) => {
@@ -33,17 +31,10 @@ function EditInformation() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateEmployee);
     await axios
       .put(`${APIrenderer}/users/${id}`, updateEmployee)
       .then((res) => alert("Applicant is Updated", res));
     navigate("/employees");
-  };
-
-  const handleDelete = async () => {
-    await axios
-      .delete(`${APIrenderer}/users/${id}`)
-      .then(navigate("/employees"), () => console.log("Successfully deleted"));
   };
 
   return (

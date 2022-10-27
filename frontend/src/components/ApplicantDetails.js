@@ -18,10 +18,7 @@ function ApplicantDetails() {
     axios
       .get(`${APIrenderer}/applicants`)
       .then((res) => {
-        console.log(res);
         setApplicants(res.data.data);
-        console.log(res.data.data);
-        console.log(res.data.data[0].firstname);
       })
       .catch((err) => {
         console.log(err);

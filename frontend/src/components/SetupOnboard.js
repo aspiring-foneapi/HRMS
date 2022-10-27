@@ -20,7 +20,6 @@ function SetupOnboard() {
     axios
       .get(`${APIrenderer}/applicants/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateApplicant(res.data);
       })
       .catch((err) => {
@@ -37,16 +36,15 @@ function SetupOnboard() {
   };
 
   const handleSubmit = async () => {
-    console.log("Submit button clicked", updateApplicant);
     const { firstname, lastname, email, stage } = updateApplicant;
     if (firstname && lastname && email && stage) {
       await axios
         .put(`${APIrenderer}/applicants/${id}`, updateApplicant)
         .then((res) => alert("Applicant is Updated", res));
-      navigate("/applicants");
+      navigate("/");
     } else {
       alert("Fill up all the Required fields");
-      navigate("/applicants");
+      navigate("/");
     }
   };
 

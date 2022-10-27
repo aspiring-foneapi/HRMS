@@ -5,7 +5,6 @@ import axios from "axios";
 function EmployeeDashboard(props) {
   const APIrenderer = "https://hrms-api.onrender.com";
   const { id } = useParams();
-  console.log(id);
   const navigate = useNavigate();
 
   const [user, setUser] = useState();
@@ -14,7 +13,6 @@ function EmployeeDashboard(props) {
     axios
       .get(`${APIrenderer}/users/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUser(res.data);
       })
       .catch((err) => {

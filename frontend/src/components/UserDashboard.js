@@ -7,14 +7,13 @@ function UserDashboard() {
   const APIrenderer = "https://hrms-api.onrender.com";
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
+
   const [user, setUser] = useState("");
 
   useEffect(() => {
     axios
       .get(`${APIrenderer}/users/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUser(res.data);
       })
       .catch((err) => {

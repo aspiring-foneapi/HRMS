@@ -21,7 +21,6 @@ function Onboard() {
     axios
       .get(`${APIrenderer}/applicants/${id}`)
       .then((res) => {
-        console.log("First", res.data);
         setUpdateApplicant(res.data);
       })
       .catch((err) => {
@@ -38,7 +37,6 @@ function Onboard() {
   };
 
   const handleSubmit = async () => {
-    console.log(updateApplicant);
     const { firstname, lastname, email, password } = updateApplicant;
     if (firstname && lastname && email && password) {
       await axios
