@@ -21,6 +21,7 @@ import UserDashboard from "./components/UserDashboard";
 import EditInformation from "./components/EditInformation";
 import SetupEmployee from "./components/SetupEmployee";
 import SetupOnboard from "./components/SetupOnboard";
+import TimeoffEmployee from "./components/TimeoffEmployee";
 
 function App() {
   const [userData, setUserData] = useState();
@@ -76,6 +77,17 @@ function App() {
                 (userData && userData._id && userData.role === "Admin") ||
                 "Employee" ? (
                   <Timeoff />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/timeoffemployee/:id"
+              element={
+                (userData && userData._id && userData.role === "Admin") ||
+                "Employee" ? (
+                  <TimeoffEmployee />
                 ) : (
                   <Login />
                 )

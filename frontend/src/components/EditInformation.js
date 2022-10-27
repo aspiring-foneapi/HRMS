@@ -164,7 +164,7 @@ function EditInformation() {
                 </div>
                 <button
                   className="btn btn-primary"
-                  onClick={() => navigate(`/timeoff/${updateEmployee._id}`)}
+                  onClick={() => navigate(`/timeoffemployee/${id}`)}
                 >
                   Apply Leave/Time Off
                 </button>{" "}
