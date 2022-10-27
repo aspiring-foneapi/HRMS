@@ -64,7 +64,7 @@ app.post("/register", (req, res) => {
         email,
         role,
         password,
-        timeoff: 5,
+        timeoff,
         joindate: new Date(),
       });
       user.save();
