@@ -90,7 +90,6 @@ function EmployeeDetails(user) {
                           ? 1
                           : -1
                       )
-
                       .slice(pagesVisited, pagesVisited + usersPerPage)
                       .map((employee) => (
                         <tr key={employee._id}>
