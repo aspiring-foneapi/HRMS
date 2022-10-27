@@ -73,13 +73,6 @@ function EmployeeDetails(user) {
       <Home>
         <Container>
           <div>
-            <form className="d-flex">
-              <input
-                className="form-control me-2"
-                placeholder="Search..."
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </form>
             <div>
               <h2 className="text-center">Employees</h2>
               <table className="table table-bordered table-striped">
@@ -97,9 +90,7 @@ function EmployeeDetails(user) {
                           ? 1
                           : -1
                       )
-                      .filter((employee) =>
-                        employee.firstname.toLowerCase().includes(search)
-                      )
+
                       .slice(pagesVisited, pagesVisited + usersPerPage)
                       .map((employee) => (
                         <tr key={employee._id}>
