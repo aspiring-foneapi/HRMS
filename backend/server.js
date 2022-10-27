@@ -39,7 +39,7 @@ const EmployeeDetailsSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: String,
   joindate: String,
-  timeoff: Number,
+  timeoff: String,
   timeofffromdate: String,
   timeofftodate: String,
   leavefromdate: String,
