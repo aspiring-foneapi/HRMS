@@ -16,10 +16,10 @@ app.use(
 // const { authPage } = require("./middlware");
 
 // MongoDB Atlas
-// const mongoUrl =
-//   "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
+const mongoUrl =
+  "mongodb+srv://tmq_mckevin:Makmak.11@hrms.ilgspwg.mongodb.net/?retryWrites=true&w=majority";
 // Docker
-const mongoUrl = "mongodb://localhost:37017/hrmsdb";
+// const mongoUrl = "mongodb://localhost:37017/hrmsdb";
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
