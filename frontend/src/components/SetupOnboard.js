@@ -89,13 +89,16 @@ function SetupOnboard() {
             </div>
             <div className="mb-3">
               <label>Stage</label>
-              <input
-                value={"onboarding initiated"}
+              <select
                 type="text"
                 className="form-control"
                 placeholder="Stage"
                 name="stage"
-              />
+                onChange={handleChange}
+              >
+                <option></option>
+                <option>onboarding initiated</option>
+              </select>
             </div>
             <div className="mb-3">
               <label>Join Date</label>
