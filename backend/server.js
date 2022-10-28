@@ -40,6 +40,7 @@ const EmployeeDetailsSchema = new mongoose.Schema({
   password: String,
   joindate: String,
   timeoff: String,
+  leave: String,
   timeofffromdate: String,
   timeofftodate: String,
   leavefromdate: String,
