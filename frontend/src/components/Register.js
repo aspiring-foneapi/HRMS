@@ -25,7 +25,6 @@ export const Register = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(value);
     const { firstname, lastname, email, password } = value;
     if (firstname && lastname && email && password) {
       await axios

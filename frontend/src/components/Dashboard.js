@@ -6,9 +6,7 @@ function Dashboard() {
   return (
     <React.Fragment>
       <Home>
-        <b>
-          <h1>Hello, Admin</h1>
-        </b>
+        <h1>Hello, Admin</h1>
       </Home>
     </React.Fragment>
   );

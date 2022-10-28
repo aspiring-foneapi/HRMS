@@ -34,7 +34,7 @@ function EditInformation() {
     await axios
       .put(`${APIrenderer}/users/${id}`, updateEmployee)
       .then((res) => alert("Applicant is Updated", res));
-    navigate("/employees");
+    navigate(`/userdashboard/${id}`);
   };
 
   return (
@@ -100,7 +100,7 @@ function EditInformation() {
                   <label>Timeoff/Leave Request</label>
                   <table className="table table-bordered table-striped">
                     <thead>
-                      <th>Approved/Pending Timeoff</th>
+                      <th>Timeoff Request</th>
                       <th>Time Off From</th>
                       <th>Time Off To</th>
                     </thead>
@@ -109,24 +109,10 @@ function EditInformation() {
                         <label>{updateEmployee.timeoff}</label>
                       </td>
                       <td>
-                        <input
-                          value={updateEmployee.timeofffromdate}
-                          type="timeoff"
-                          className="form-control"
-                          placeholder="No Time Off From date yet"
-                          name="timeofffromdate"
-                          onChange={handleChange}
-                        />
+                        <label>{updateEmployee.timeofffromdate}</label>
                       </td>
                       <td>
-                        <input
-                          value={updateEmployee.timeofftodate}
-                          type="timeoff"
-                          className="form-control"
-                          placeholder="No Time Off To date yet"
-                          name="timeofftodate"
-                          onChange={handleChange}
-                        />
+                        <label>{updateEmployee.timeofftodate}</label>
                       </td>
                     </tbody>
                   </table>
@@ -135,29 +121,19 @@ function EditInformation() {
                   <label>Leave</label>
                   <table className="table table-bordered table-striped">
                     <thead>
+                      <th>Leave Request</th>
                       <th>Leave From</th>
                       <th>Leave to</th>
                     </thead>
                     <tbody>
                       <td>
-                        <input
-                          value={updateEmployee.leavefromdate}
-                          type="leave"
-                          className="form-control"
-                          placeholder="No leave from date yet"
-                          name="leavefromdate"
-                          onChange={handleChange}
-                        />
+                        <label>{updateEmployee.leave}</label>
                       </td>
                       <td>
-                        <input
-                          value={updateEmployee.leavetodate}
-                          type="leave"
-                          className="form-control"
-                          placeholder="No leave to date yet"
-                          name="leavetodate"
-                          onChange={handleChange}
-                        />
+                        <label>{updateEmployee.leavefromdate}</label>
+                      </td>
+                      <td>
+                        <label>{updateEmployee.leavetodate}</label>
                       </td>
                     </tbody>
                   </table>
