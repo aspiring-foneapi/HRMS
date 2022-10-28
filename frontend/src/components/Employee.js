@@ -144,7 +144,7 @@ function Employee() {
                           value={updateEmployee.timeoff}
                           type="timeoff"
                           className="form-control"
-                          placeholder="No Remaining Time Off"
+                          placeholder="Timeoff Request"
                           name="timeoff"
                           onChange={handleChange}
                         />
