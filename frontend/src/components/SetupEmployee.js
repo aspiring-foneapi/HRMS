@@ -97,13 +97,29 @@ function SetupEmployee() {
                   />
                 </div>
                 <div className="mb-3">
+                  <label>Role</label>
+                  <select
+                    type="text"
+                    className="form-control"
+                    placeholder="Role"
+                    name="role"
+                    onChange={handleChange}
+                  >
+                    <option></option>
+                    <option>Employee</option>
+                    <option>Manager</option>
+                    <option>Human Resources</option>
+                    <option>Finance</option>
+                  </select>
+                </div>
+                <div className="mb-3">
                   <label>Password</label>
                   <input
                     value={updateEmployee.password}
                     type="password"
                     className="form-control"
-                    placeholder="Last name"
-                    name="lastname"
+                    placeholder="Password"
+                    name="password"
                     onChange={handleChange}
                   />
                 </div>

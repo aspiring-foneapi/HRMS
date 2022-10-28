@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import Home from "./Home";
 
 function Employee() {
-  const APIrenderer = "https://hrms-api.onrender.com";
+  const APIrenderer = "http://localhost:3001";
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -82,8 +82,8 @@ function Employee() {
                     value={updateEmployee.password}
                     type="password"
                     className="form-control"
-                    placeholder="Last name"
-                    name="lastname"
+                    placeholder="Password"
+                    name="password"
                     onChange={handleChange}
                   />
                 </div>
@@ -105,7 +105,7 @@ function Employee() {
                     type="text"
                     className="form-control"
                     placeholder="Email"
-                    name="email"
+                    name="id"
                     onChange={handleChange}
                   />
                 </div>

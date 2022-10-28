@@ -141,7 +141,10 @@ function App() {
             <Route
               path="/userdashboard/:id"
               element={
-                userData && userData._id && userData.role === "Employee" ? (
+                (userData && userData._id && userData.role === "Employee") ||
+                "Human Resources" ||
+                "Finance" ||
+                "Manager" ? (
                   <UserDashboard />
                 ) : (
                   <Login />
@@ -151,7 +154,10 @@ function App() {
             <Route
               path="/employeedetails/:id"
               element={
-                userData && userData._id && userData.role === "Employee" ? (
+                (userData && userData._id && userData.role === "Employee") ||
+                "Human Resources" ||
+                "Finance" ||
+                "Manager" ? (
                   <EmployeeDetailsDashboard />
                 ) : (
                   <Login />
