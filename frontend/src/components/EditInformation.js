@@ -76,7 +76,7 @@ function EditInformation() {
                     value={updateEmployee.password}
                     type="password"
                     className="form-control"
-                    placeholder="Last name"
+                    placeholder="Password"
                     name="password"
                     onChange={handleChange}
                   />
