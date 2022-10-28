@@ -74,10 +74,10 @@ function EditInformation() {
                   <label>Password</label>
                   <input
                     value={updateEmployee.password}
-                    type="text"
+                    type="password"
                     className="form-control"
                     placeholder="Last name"
-                    name="lastname"
+                    name="password"
                     onChange={handleChange}
                   />
                 </div>

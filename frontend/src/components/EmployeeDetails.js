@@ -7,7 +7,7 @@ import ReactPaginate from "react-paginate";
 import Home from "./Home";
 
 function EmployeeDetails(user) {
-  const APIrenderer = "http://localhost:3001";
+  const APIrenderer = "https://hrms-api.onrender.com";
   const [employees, setEmployees] = useState([]);
   const [offboarding, setOffboarding] = useState([]);
   const [search, setSearch] = useState("");
