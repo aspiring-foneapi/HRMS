@@ -77,7 +77,17 @@ app.post("/login", bodyParser.urlencoded({ extended: false }), (req, res) => {
   console.log(req.body);
   const { email, password } = req.body;
   EmployeeDetailsModel.findOne(
-    { email: email, role: (role = ["Admin", "Employee"]) },
+    {
+      email: email,
+      role: (role = [
+        "",
+        "Admin",
+        "Employee",
+        "Manager",
+        "Human Resources",
+        "Finance",
+      ]),
+    },
     (err, user) => {
       if (user) {
         if (password === user.password) {
